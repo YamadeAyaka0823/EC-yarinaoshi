@@ -11,7 +11,7 @@ public class User {
 	/** パスワード */
 	private String password;
 	/** 郵便番号 */
-	private String zipCode;
+	private String zipcode;
 	/** メールアドレス */
 	private String address;
 	/** 電話番号 */
@@ -41,11 +41,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getZipCode() {
-		return zipCode;
+	public String getZipcode() {
+		return zipcode;
 	}
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 	public String getAddress() {
 		return address;
@@ -62,9 +62,13 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", zipCode="
-				+ zipCode + ", address=" + address + ", telephone=" + telephone + "]";
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", zipcode="
+				+ zipcode + ", address=" + address + ", telephone=" + telephone + "]";
 	}
+	
+	
+	
+
 	
 	
 	
