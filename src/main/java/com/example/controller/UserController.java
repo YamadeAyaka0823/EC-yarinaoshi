@@ -66,7 +66,7 @@ public class UserController {
 		}
 		User user = userService.findByEmail(form);
 		model.addAttribute("user", user);
-		return "item_list";
+		return "forward:/item/list";
 	}
 	
 	

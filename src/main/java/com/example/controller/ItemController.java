@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
-
+import com.example.domain.Topping;
 import com.example.service.ItemService;
 
 @Controller
@@ -25,7 +25,7 @@ public class ItemController {
 	 */
 	@RequestMapping("/list")
 	public String list(Model model) {
-		List<Item> itemList = itemService.findAll();
+		List<List<Item>> itemList = itemService.findAll();
 		model.addAttribute("itemList", itemList);
 		return "item_list";
 	}
@@ -38,9 +38,31 @@ public class ItemController {
 	 */
 	@RequestMapping("/serch")
 	public String serch(String name, Model model) {
-		List<Item> itemList = itemService.findByName(name);
-		model.addAttribute("itemList", itemList);
-		return list(model);
+		List<List<Item>> itemList = itemService.findByName(name);
+		
+		if(itemList.size() == 0) {
+			model.addAttribute("message", "１件もありませんでした");
+			return list(model);
+		}else {
+			model.addAttribute("itemList", itemList);	
+		}
+		return "item_list";
+	}
+	
+	/**
+	 * 商品詳細の検索.
+	 * @param itemId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/detail")
+	public String detail(Integer id, Model model) {
+		Item detail = itemService.load(id);
+		model.addAttribute("detail", detail);
+		
+		List<List<Topping>> toppingList = itemService.findAllTopping();
+		model.addAttribute("toppingList", toppingList);
+		return "item_detail";
 	}
 
 }

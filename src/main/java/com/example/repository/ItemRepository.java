@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.domain.Item;
 
+
 @Repository
 public class ItemRepository {
 	
@@ -45,10 +46,27 @@ public class ItemRepository {
 	 * @return
 	 */
 	public List<Item> findByName(String name){
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name = :name";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name ORDER BY price_m";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
 	}
+	
+	/**
+	 * 商品詳細を検索するためのリポジトリ.
+	 * @param itemId
+	 * @return
+	 */
+	public Item load(Integer id) {
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		if(itemList.size() == 0) {
+			return null;
+		}
+		return itemList.get(0);
+	}
+	
+
 
 }
