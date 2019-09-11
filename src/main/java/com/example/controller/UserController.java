@@ -58,13 +58,22 @@ public class UserController {
 		return index();
 	}
 	
+	/**
+	 * ログイン.
+	 * @param form
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/login")
 	public String login(@Validated LoginForm form, BindingResult result, Model model) {
 		
 		if(result.hasErrors()) {
 			return index();
 		}
-		User user = userService.findByEmail(form);
+		
+
+		User user = userService.findByEmailAndPassword(form);
 		model.addAttribute("user", user);
 		return "forward:/item/list";
 	}

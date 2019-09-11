@@ -36,8 +36,8 @@ public class UserService {
 	 * @param form
 	 * @return
 	 */
-	public User findByEmail(LoginForm form) {
-		return userRepository.findByEmail(form.getEmail());
+	public User findByEmailAndPassword(LoginForm form) {
+		return userRepository.findByEmailAndPassword(form.getEmail(), form.getPassword());
 	}
 
 }
