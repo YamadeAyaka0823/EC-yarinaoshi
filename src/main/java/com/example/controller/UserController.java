@@ -36,6 +36,7 @@ public class UserController {
 	 */
 	@RequestMapping("")
 	public String index() {
+		System.out.println("a");
 		return "login";
 	}
 	

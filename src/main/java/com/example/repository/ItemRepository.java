@@ -2,14 +2,20 @@ package com.example.repository;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Item;
+import com.example.domain.OrderItem;
 
 
 @Repository
@@ -17,6 +23,7 @@ public class ItemRepository {
 	
 	@Autowired
 	private NamedParameterJdbcTemplate template;
+	
 	
 	private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs,i) -> {
 		Item item = new Item();
@@ -65,6 +72,30 @@ public class ItemRepository {
 			return null;
 		}
 		return itemList.get(0);
+	}
+	
+	private SimpleJdbcInsert insert;
+	
+	/**
+	 * INSERT時に採番されたIDを取得する方法.
+	 */
+	@PostConstruct
+	public void init() {
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcOperations());
+		SimpleJdbcInsert withTableName = simpleJdbcInsert.withTableName("order_items");
+		insert = withTableName.usingGeneratedKeyColumns("id");
+	}
+	
+	/**
+	 * 商品をDBにインサートするリポジトリ.
+	 * @param orderItem
+	 * @return
+	 */
+	public OrderItem insert(OrderItem orderItem) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
+		Number key = insert.executeAndReturnKey(param);
+		orderItem.setId(key.intValue());
+		return orderItem;
 	}
 	
 

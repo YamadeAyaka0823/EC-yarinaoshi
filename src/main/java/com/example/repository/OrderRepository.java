@@ -35,6 +35,9 @@ public class OrderRepository {
 	
 	private SimpleJdbcInsert insert;
 	
+	/**
+	 * INSERT時に採番されたIDを取得する方法.
+	 */
 	@PostConstruct
 	public void init() {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate)template.getJdbcOperations());
@@ -134,22 +137,22 @@ public class OrderRepository {
 	 */
 	private String join5Table() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT A.id A_id, A.user_id A_user_id, A.status A_status, A.total_price A_total_price, A.order_date A_order_date, A.destination_name A_destination_name, A.destination_email A_destination_email, A.destination_zipcode A_destination_zipcode, A.destination_address A_destination_address, A.destination_tel A_destination_tel, A.delivery_time A_delivery_time, A.payment_method A_payment_method");
-		sb.append("B.id B_id, B.item_id B_item_id, B.order_id B_order_id, B.quantity B_quantity, B.size B_size");
-		sb.append("C.id C_id, C.name C_name, C.description C_description, C.price_m C_price_m, C.price_l C_price_l, C.image_path C_image_path, C.deleted C_deleted");
-		sb.append("D.id D_id, D.topping_id D_topping_id, D.order_item_id D_order_item_id");
-		sb.append("E.id E_id, E.name E_name, E.price_m E_price_m, E.price_l E_price_l");
-		sb.append("FROM " + TABLE_ORDERS + " A LEFT OUTER JOIN " + TABLE_ORDER_ITEM + " B ON A.id = B.order_id ");
-		sb.append("LEFT OUTER JOIN " + TABLE_ITEM + " C ON B.item_id = C.id ");
-		sb.append("LEFT OUTER JOIN " + TABLE_ORDER_TOPPING + " D ON B.id = D.order_item_id ");
-		sb.append("LEFT OUTER JOIN " + TABLE_TOPPING + " E ON E.id = D.topping_id ");
+		sb.append("SELECT A.id A_id, A.user_id A_user_id, A.status A_status, A.total_price A_total_price, A.order_date A_order_date, A.destination_name A_destination_name, A.destination_email A_destination_email, A.destination_zipcode A_destination_zipcode, A.destination_address A_destination_address, A.destination_tel A_destination_tel, A.delivery_time A_delivery_time, A.payment_method A_payment_method, ");
+		sb.append(" B.id B_id, B.item_id B_item_id, B.order_id B_order_id, B.quantity B_quantity, B.size B_size, ");
+		sb.append(" C.id C_id, C.name C_name, C.description C_description, C.price_m C_price_m, C.price_l C_price_l, C.image_path C_image_path, C.deleted C_deleted, ");
+		sb.append(" D.id D_id, D.topping_id D_topping_id, D.order_item_id D_order_item_id, ");
+		sb.append(" E.id E_id, E.name E_name, E.price_m E_price_m, E.price_l E_price_l");
+		sb.append(" FROM " + TABLE_ORDERS + " A LEFT OUTER JOIN " + TABLE_ORDER_ITEM + " B ON A.id = B.order_id ");
+		sb.append(" LEFT OUTER JOIN " + TABLE_ITEM + " C ON B.item_id = C.id ");
+		sb.append(" LEFT OUTER JOIN " + TABLE_ORDER_TOPPING + " D ON B.id = D.order_item_id ");
+		sb.append(" LEFT OUTER JOIN " + TABLE_TOPPING + " E ON E.id = D.topping_id ");
 		
 	    String JoinSql = sb.toString();
 	    return JoinSql;
 	}
 	
 	/**
-	 * 商品をインサートするリポジトリ.
+	 * 商品のオーダーをインサートするリポジトリ.
 	 * @param order
 	 */
 	public Order insert(Order order) {
@@ -168,7 +171,7 @@ public class OrderRepository {
 	public List<Order> findByStatusAndUserId(Integer status, Integer userId){
 		StringBuilder sql = new StringBuilder();
 		sql.append(join5Table());
-		sql.append("WHERE status = :status AND user_id = :userId");
+		sql.append(" WHERE status = :status AND user_id = :userId ");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("status", status).addValue("userId", userId);
 		List<Order> orderList = template.query(sql.toString(), param, ORDER_RESULT_SET_EXTRACTOR );
 		return orderList;
