@@ -13,12 +13,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-<link type="text/css" rel="stylesheet"
-  href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />
-<script type="text/javascript"
-  src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script type="text/javascript"
-  src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 $(function(){
     /** プロジェクト名が変更になっても修正が必要なくなるよう実装**/
@@ -26,20 +22,22 @@ $(function(){
 
     $.ajax({
         /** オートコンプリート用のリストを取得するURL*/
-        url: "/" + pathname + "/getAutoComplete",
+        url: "/getAutoComplete/list",
         dataType: "json",
-        type: 'GET'
+        type: 'POST'
     }).then(function(searchResult){ /** 検索結果のリストは引数に自動で入る*/
         $('#serchName').autocomplete({ /** 実装したい入力欄のid/classを指定*/
             source : searchResult, /** 候補リスト(必須)*/
             autoFocus: true, /**リスト表示に際してリスト先頭にフォーカスするか*/
             delay: 500, /**キー入力からリスト表示までの遅延時間（ミリ秒）*/
-            minLength: 1 /**オートコンプリート機能が働く最小文字数*/
+            minLength: 0 /**オートコンプリート機能が働く最小文字数*/
         });
         },function(){
     });
 });
 </script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 </head>
 <body>
@@ -84,14 +82,16 @@ $(function(){
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" th:action="@{/item/serch}" class="form-horizontal">
+						<form method="post" action="#" th:action="@{/item/serch}" class="form-horizontal">
 
 							<div class="form-group">
+							<div class="ui-widget">
 								<label for="serchName" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
 									<input type="text" name="name" id="serchName"
 										class="form-control input-sm" />
 								</div>
+							</div>
 							</div>
 							<div class="text-center">
 								<button type="submit" value="検索" class="btn btn-primary">検索</button>
@@ -102,14 +102,18 @@ $(function(){
 				</div>
 			</div>
 		</div>
-
+         
+                        <select name="number" class="sort_btn">
+						 <option value="lowprice" selected>価格の低い順</option>
+						 <option value="highprice">価格の高い順</option>
+						</select>
 		<!-- table -->
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<table class="table table-striped">
 					<tbody>
-						<tr th:each="item:${itemList}">
+						<tr th:each="item:${itemList}" id="number">
 
 							<th th:each="list:${item}">
 							

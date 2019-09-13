@@ -21,7 +21,7 @@ public class GetAutoCompleteController {
 	private GetAutoCompleteRepository getAutoCompleteRepository;
 	
 	@ResponseBody
-	@RequestMapping
+	@RequestMapping("/list")
 	public String getAutoComplete() {
 		List<String> nameList = getAutoCompleteRepository.getAllNames();
 		return JSON.encode(nameList);

@@ -6,12 +6,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ピザ屋のネット注文</title>
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/piza.css" rel="stylesheet">
+<link href="/css/bootstrap.css" rel="stylesheet">
+<link href="/css/piza.css" rel="stylesheet">
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 </head>
 <body>
 	<div class="container">
@@ -27,7 +28,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
-						alt="main log" src="img/header_logo.png" height="35">
+						alt="main log" src="/img/header_logo.png" height="35">
 					</a>
 				</div>
                 
@@ -166,7 +167,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html">
+		<form th:action="@{/order/load}" method="post" th:object="${orderForm}">
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
@@ -180,7 +181,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									</div>
 								</td>
 								<td>
-									<input type="text">
+								    <div th:if="${#fields.hasErrors('destinationName')}"
+								         th:errors="*{destinationName}"
+								         style="color:red"></div>
+									<input type="text" name="destinationName" th:field="*{destinationName}">
 								</td>
 							</tr>
 							<tr>
@@ -190,7 +194,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									</div>
 								</td>
 								<td>
-									<input type="text">
+								    <div th:if="${#fields.hasErrors('destinationEmail')}"
+								         th:errors="*{destinationEmail}"
+								         style="color:red"></div>
+									<input type="text" name="destinationEmail" th:field="*{destinationEmail}">
 								</td>
 							</tr>
 							<tr>
@@ -200,7 +207,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									</div>
 								</td>
 								<td>
-									<input type="text">&nbsp;&nbsp;<button>住所検索</button>
+								    <div th:if="${#fields.hasErrors('destinationZipcode')}"
+								         th:errors="*{destinationZipcode}"
+								         style="color:red"></div>
+									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;<input type="button" value="住所検索" onClick="AjaxZip3.zip2addr('destinationZipcode','','destinationAddress','destinationAddress');">
 								</td>
 							</tr>
 							<tr>
@@ -210,7 +220,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									</div>
 								</td>
 								<td>
-									<input type="text">
+								    <div th:if="${#fields.hasErrors('destinationAddress')}"
+								         th:errors="*{destinationAddress}"
+								         style="color:red"></div>
+									<input type="text" name="destinationAddress" th:field="*{destinationAddress}" onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">
 								</td>
 							</tr>
 							<tr>
@@ -220,7 +233,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									</div>
 								</td>
 								<td>
-									<input type="text">
+								    <div th:if="${#fields.hasErrors('destinationTel')}"
+								         th:errors="*{destinationTel}"
+								         style="color:red"></div>
+									<input type="text" name="destinationTel" th:field="*{destinationTel}">
 								</td>
 							</tr>
 							<tr>
@@ -234,10 +250,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 										<div class="row">
 											<div class="col-sm-12">
 												<label
-													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
+													class="control-label" style="color: red" for="inputPeriod"></label>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="name" id="name"
+											    <div th:if="${#fields.hasErrors('deliveryTime')}"
+								                     th:errors="*{deliveryTime}"
+								                      style="color:red"></div>
+												<input type="date" name="deliveryTime"id="name" th:field="*{deliveryTime}"
 													class="form-control input-sm" />
 											</div>
 
@@ -246,47 +265,47 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 											<div class="col-sm-12">
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany" checked="checked">
+														name="deliveryHour" checked="checked" value="10">
 													10時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryHour" value="11">
 													11時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryHour" value="12">
 													12時
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryHour" value="13">
 													13時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryHour" value="14">
 													14時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryHour" value="15">
 													15時
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryHour" value="16">
 													16時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryHour" value="17">
 													17時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryHour" value="18">
 													18時
 												</label><br>
 											</div>
@@ -304,6 +323,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お支払い方法</h3>
+					<div th:if="${#fields.hasErrors('paymentMethod')}"
+								         th:errors="*{paymentMethod}"
+								         style="color:red"></div>
 					<table class="table table-striped">
 						<tbody>
 							<tr>
@@ -317,7 +339,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" checked="checked" value="1">
 												代金引換
 											</label>
 										</div>
@@ -335,7 +357,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" checked="checked" value="2">
 												クレジットカード
 											</label><br><br>
 										</div>
@@ -349,6 +371,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<div class="row">
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">
+					    <input type="hidden" name="orderId" value="5">
+					    <input type="hidden" name="orderDate">
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 					</div>
 				</div>
