@@ -16,6 +16,8 @@ public class User {
 	private String address;
 	/** 電話番号 */
 	private String telephone;
+	/** 確認用パスワード */
+	private String checkPassword;
 	
 	public Integer getId() {
 		return id;
@@ -59,12 +61,27 @@ public class User {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
+	public String getCheckPassword() {
+		return checkPassword;
+	}
+	public void setCheckPassword(String checkPassword) {
+		this.checkPassword = checkPassword;
+	}
 	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", zipcode="
-				+ zipcode + ", address=" + address + ", telephone=" + telephone + "]";
+				+ zipcode + ", address=" + address + ", telephone=" + telephone + ", checkPassword=" + checkPassword
+				+ "]";
 	}
+	
+	
+	
+	
+
+	
+	
+
 	
 	
 	

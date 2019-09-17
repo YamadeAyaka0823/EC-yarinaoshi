@@ -35,10 +35,12 @@ public class ShoppingCartController {
 		System.out.println(form);
 		Order order = new Order();
 		order.setTotalPrice(0);
-		int user_id = 0;
-		user_id = loginUser.getUser().getId();
-		order.setUserId(user_id);
+//		int user_id = 0;
+		System.out.println("fffffffffffffffff" +  loginUser.getUser().getId());
+		int user_id = loginUser.getUser().getId();
 		
+		order.setUserId(user_id);
+
 		OrderItem orderItem = new OrderItem();
 		char[] size = form.getSize().toCharArray();
 		orderItem.setItemId(form.getIntItemId());

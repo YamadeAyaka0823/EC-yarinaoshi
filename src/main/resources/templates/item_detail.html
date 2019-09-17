@@ -74,12 +74,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio"
-											name="size" checked="checked">
+											name="size" checked="checked" value="M">
 										M<span class="price" th:text="${#numbers.formatInteger(detail.priceM, 2, 'COMMA')}">&nbsp;&nbsp;</span>&nbsp;&nbsp;円(税抜)
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
-											name="size">
+											name="size" value="L">
 										L<span class="price" th:text="${#numbers.formatInteger(detail.priceL, 2, 'COMMA')}">&nbsp;</span>&nbsp;&nbsp;円(税抜)
 									</label>
 								</div>
@@ -101,7 +101,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								<div class="col-sm-12" th:each="topping:${toppingList}">
 								
 									<label class="checkbox-inline" th:each="list:${topping}">
-										<input type="checkbox" name="oderToppingList" value="" th:text="${list.name}">
+										<input type="checkbox" name="orderToppingList" th:value="${list.id}" th:text="${list.name}">
 									</label>
 								
 								</div>
@@ -140,7 +140,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-10">
 						<div class="form-group">
-							<span id="total-price" name="totalPrice">この商品金額：38,000 円(税抜)</span>
+							<span id="total-price">この商品金額：38,000 円(税抜)</span>
 						</div>
 					</div>
 				</div>
@@ -152,7 +152,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									type="submit" value="カートに入れる">
 							</p>
 							<input type="hidden" name="itemId" th:value="${detail.id}">
-                            <input type="hidden" name="userId" value="9">
+							<input type="hidden" name="userId" value="10">
+                        
 						</div>
 					</div>
 				</div>
