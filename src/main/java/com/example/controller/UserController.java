@@ -61,7 +61,7 @@ public class UserController {
 		
 		if(!form.getPassword().equals(form.getCheckPassword())) {
 			result.rejectValue("password",null, "パスワードが一致しません");
-			result.rejectValue("confirmationPassword", "", "");
+			result.rejectValue("checkPassword", "", "");
 		}
 		User user = userService.findByEmail(form);
 		if(user != null) {
