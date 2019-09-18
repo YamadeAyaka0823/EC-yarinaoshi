@@ -152,7 +152,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									type="submit" value="カートに入れる">
 							</p>
 							<input type="hidden" name="itemId" th:value="${detail.id}">
-							<input type="hidden" name="userId" value="10">
+							<input type="hidden" name="userId" th:value="${userId}">
                         
 						</div>
 					</div>

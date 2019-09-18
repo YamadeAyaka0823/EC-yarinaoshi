@@ -61,17 +61,17 @@ public class OrderRepository {
 			if(id != preId) {
 				Order order = new Order();
 				order.setId(rs.getInt("A_id"));
-				order.setUserId(rs.getInt("A_userId"));
+				order.setUserId(rs.getInt("A_user_id"));
 				order.setStatus(rs.getInt("A_status"));
-				order.setTotalPrice(rs.getInt("A_totalPrice"));
-				order.setOrderDate(rs.getDate("A_orderDate"));
-				order.setDestinationName(rs.getString("A_destinationName"));
-				order.setDestinationEmail(rs.getString("A_destinationEmail"));
-				order.setDestinationZipcode(rs.getString("A_destinationZipcode"));
-				order.setDestinationAddress(rs.getString("A_destinationAddress"));
-				order.setDestinationTel(rs.getString("A_destinationTel"));
-				order.setDeliveryTime(rs.getTimestamp("A_deliveryTime"));
-				order.setPaymentMethod(rs.getInt("A_paymentMethod"));
+				order.setTotalPrice(rs.getInt("A_total_price"));
+				order.setOrderDate(rs.getDate("A_order_date"));
+				order.setDestinationName(rs.getString("A_destination_name"));
+				order.setDestinationEmail(rs.getString("A_destination_email"));
+				order.setDestinationZipcode(rs.getString("A_destination_zipcode"));
+				order.setDestinationAddress(rs.getString("A_destination_address"));
+				order.setDestinationTel(rs.getString("A_destination_tel"));
+				order.setDeliveryTime(rs.getTimestamp("A_delivery_time"));
+				order.setPaymentMethod(rs.getInt("A_payment_method"));
 				
 				orderItemList = new ArrayList<>();
 				order.setOrderItemList(orderItemList);
@@ -83,8 +83,8 @@ public class OrderRepository {
 			if(orderItemCheckId != 0 && orderItemCheckId != preOrderItemCheckId) {
 				OrderItem orderItem = new OrderItem();
 				orderItem.setId(rs.getInt("B_id"));
-				orderItem.setItemId(rs.getInt("B_itemId"));
-				orderItem.setOrderId(rs.getInt("B_orderId"));
+				orderItem.setItemId(rs.getInt("B_item_id"));
+				orderItem.setOrderId(rs.getInt("B_order_id"));
 				orderItem.setQuantity(rs.getInt("B_quantity"));
 				
 				String str = rs.getString("B_size");
@@ -96,9 +96,9 @@ public class OrderRepository {
 				item.setId(rs.getInt("C_id"));
 				item.setName(rs.getString("C_name"));
 				item.setDescription(rs.getString("C_description"));
-				item.setPriceM(rs.getInt("C_priceM"));
-				item.setPriceL(rs.getInt("C_priceL"));
-				item.setImagePath(rs.getString("C_imagePath"));
+				item.setPriceM(rs.getInt("C_price_m"));
+				item.setPriceL(rs.getInt("C_price_l"));
+				item.setImagePath(rs.getString("C_image_path"));
 				item.setDeleted(rs.getBoolean("C_deleted"));
 				orderItem.setItem(item);
 				
@@ -113,14 +113,14 @@ public class OrderRepository {
 			if(orderToppingCheckId != 0) {
 				OrderTopping orderTopping = new OrderTopping();
 				orderTopping.setId(rs.getInt("D_id"));
-				orderTopping.setToppingId(rs.getInt("D_toppingId"));
-				orderTopping.setOrderItemId(rs.getInt("D_orderItemId"));
+				orderTopping.setToppingId(rs.getInt("D_topping_id"));
+				orderTopping.setOrderItemId(rs.getInt("D_order_item_id"));
 				
 				Topping topping = new Topping();
 				topping.setId(rs.getInt("E_id"));
 				topping.setName(rs.getString("E_name"));
-				topping.setPriceM(rs.getInt("E_priceM"));
-				topping.setPriceL(rs.getInt("E_priceL"));
+				topping.setPriceM(rs.getInt("E_price_m"));
+				topping.setPriceL(rs.getInt("E_price_l"));
 				orderTopping.setTopping(topping);
 				
 				orderToppingList.add(orderTopping);
@@ -176,6 +176,20 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("status", status).addValue("userId", userId);
 		List<Order> orderList = template.query(sql.toString(), param, ORDER_RESULT_SET_EXTRACTOR );
 		return orderList;
+	}
+	
+	/**
+	 * 注文商品を1件検索するリポジトリ.
+	 * @param orderId
+	 * @return
+	 */
+	public Order deepLoad(Integer id) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(join5Table());
+		sql.append(" WHERE A.id = :id ");
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		List<Order> orderList = template.query(sql.toString(), param, ORDER_RESULT_SET_EXTRACTOR);
+		return orderList.get(0);
 	}
 	
 	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs,i) -> {

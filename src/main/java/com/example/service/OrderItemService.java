@@ -64,5 +64,26 @@ public class OrderItemService {
 
 	}
 	
+	/**
+	 * 注文商品を検索するサービス.
+	 * @param userId
+	 * @param status
+	 * @return
+	 */
+//	public List<Order> showOrder(Integer status, Integer userId) {
+//		List<Order> orderList = orderRepository.findByStatusAndUserId(status, userId);
+//		return orderList;
+//	}
+	
+	/**
+	 * 注文商品を1件検索するサービス.
+	 * @param orderId
+	 * @return
+	 */
+	public Order deepLoad(Integer id) {
+		Order orderItems = orderRepository.deepLoad(id);
+		return orderItems;
+	}
+	
 
 }

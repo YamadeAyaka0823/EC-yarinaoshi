@@ -15,6 +15,7 @@ import com.example.domain.Order;
 import com.example.domain.OrderItem;
 import com.example.domain.OrderTopping;
 import com.example.form.ShoppingCartForm;
+import com.example.repository.OrderRepository;
 import com.example.service.OrderItemService;
 
 @Controller
@@ -24,6 +25,9 @@ public class ShoppingCartController {
 	@Autowired
 	private OrderItemService orderItemService;
 	
+	@Autowired
+	private OrderRepository orderRepository;
+	
 	/**
 	 * 商品をインサートする.
 	 * @param form
@@ -32,13 +36,12 @@ public class ShoppingCartController {
 	 */
 	@RequestMapping("/addItemToCart")
 	public String addItemToCart(ShoppingCartForm form,BindingResult result, @AuthenticationPrincipal LoginUser loginUser, Model model) {
-		System.out.println(form);
+
 		Order order = new Order();
 		order.setTotalPrice(0);
 //		int user_id = 0;
-		System.out.println("fffffffffffffffff" +  loginUser.getUser().getId());
+
 		int user_id = loginUser.getUser().getId();
-		
 		order.setUserId(user_id);
 
 		OrderItem orderItem = new OrderItem();
@@ -59,7 +62,37 @@ public class ShoppingCartController {
 		orderItem.setOrderToppingList(orderToppingList);
 		orderItemService.insert(order, orderItem);
 		
+		return "redirect:/shoppingCart/showOrderItem";
+	}
+	
+	/**
+	 * 注文商品を表示する.
+	 * @param userId
+	 * @param status
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/showOrderItem")
+	public String showOrderItem(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		int status = 0;
+		int userId = loginUser.getUser().getId();
+		
+		List<Order> orderList = orderRepository.findByStatusAndUserId(status , userId);
+		if(orderList.size() == 0) {
+			Order order = new Order();
+			order.setOrderItemList(new ArrayList<OrderItem>());
+			model.addAttribute("order", order);
+			
+		}else {
+			Order order = orderList.get(0);
+			order = orderRepository.deepLoad(order.getId());
+			model.addAttribute("order", order);
+			
+		}
+		
 		return "cart_list";
 	}
+	
+
 
 }

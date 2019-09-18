@@ -1,6 +1,10 @@
 package com.example.form;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
+
+import com.example.domain.OrderItem;
 
 public class OrderForm {
 	
@@ -31,6 +35,8 @@ public class OrderForm {
 	private String paymentMethod;
 	/** 注文日 */
 	private String orderDate;
+	
+	private List<OrderItem> orderItemList;
 	
 	public Integer getIntOrderId() {
 		return Integer.parseInt(orderId);
@@ -120,14 +126,24 @@ public class OrderForm {
 		this.orderDate = orderDate;
 	}
 
+	public List<OrderItem> getOrderItemList() {
+		return orderItemList;
+	}
+
+	public void setOrderItemList(List<OrderItem> orderItemList) {
+		this.orderItemList = orderItemList;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderForm [orderId=" + orderId + ", destinationName=" + destinationName + ", destinationEmail="
 				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
 				+ ", deliveryHour=" + deliveryHour + ", paymentMethod=" + paymentMethod + ", orderDate=" + orderDate
-				+ "]";
+				+ ", orderItemList=" + orderItemList + "]";
 	}
+
+
 
 
 	
