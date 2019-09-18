@@ -54,5 +54,15 @@ public class ToppingRepository {
 		template.update(sql, param);
 		
 	}
+	
+	/**
+	 * トッピングを削除するリポジトリ.
+	 * @param id
+	 */
+	public void deleteByOrderItemId(Integer orderItemId) {
+		String sql = "DELETE FROM order_toppings WHERE order_item_id = :orderItemId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+		template.update(sql, param);
+	}
 
 }

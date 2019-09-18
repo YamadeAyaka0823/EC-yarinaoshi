@@ -93,6 +93,18 @@ public class ShoppingCartController {
 		return "cart_list";
 	}
 	
+	/**
+	 * カートの中身の商品を削除する.
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/delete")
+	public String delete(Integer id) {
+		orderItemService.delete(id);
+		
+		return "redirect:/shoppingCart/showOrderItem";
+	}
+	
 
 
 }

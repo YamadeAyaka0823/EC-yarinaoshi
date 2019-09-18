@@ -119,9 +119,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 								
 							</td>
 							<td>
+							   <form th:action="@{/shoppingCart/delete}" method="post">
 								<div class="text-center">
 									<button type="submit" class="btn btn-primary">削除</button>
+									<input type="hidden" name="id" th:value="${orderItem.id}">
 								</div>
+								</form>
 							</td>
 						</tr>
 

@@ -85,5 +85,14 @@ public class OrderItemService {
 		return orderItems;
 	}
 	
+	/**
+	 * カートの中身の商品を削除するサービス.
+	 * @param id
+	 */
+	public void delete(Integer id) {
+		itemRepository.deleteById(id);
+		toppingRepository.deleteByOrderItemId(id);
+	}
+	
 
 }

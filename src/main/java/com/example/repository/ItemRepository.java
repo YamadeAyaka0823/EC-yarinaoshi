@@ -98,6 +98,16 @@ public class ItemRepository {
 		return orderItem;
 	}
 	
+	/**
+	 * IDでOrderItemを削除するリポジトリ.
+	 * @param id
+	 */
+	public void deleteById(Integer id) {
+		String sql = "DELETE FROM order_items WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(sql, param);
+	}
+	
 
 
 }
