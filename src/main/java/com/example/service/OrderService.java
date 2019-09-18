@@ -27,7 +27,7 @@ public class OrderService {
 	 * @throws ParseException 
 	 */
 	public void load(OrderForm form) throws ParseException {
-		 Order order = orderRepository.load(form.getIntOrderId());
+		 Order order = orderRepository.deepLoad(form.getIntOrderId());
 		 
 		 order.setDestinationAddress(form.getDestinationAddress());
 		 order.setDestinationEmail(form.getDestinationEmail());

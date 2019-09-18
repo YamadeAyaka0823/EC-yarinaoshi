@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
 import com.example.form.OrderForm;
-import com.example.repository.OrderRepository;
+
 import com.example.service.OrderItemService;
 import com.example.service.OrderService;
 
@@ -49,12 +49,13 @@ public class OrderController {
 	 */
 	@RequestMapping("/load")
 	public String load(@Validated OrderForm form, BindingResult result, Model model) throws ParseException {
-		
+		System.out.println(form);
 		if(result.hasErrors()) {
 			return index();
 		}
 		
 		orderService.load(form);
+		model.addAttribute("form", form);
 		return "order_finished";
 	}
 	
