@@ -10,7 +10,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.Order;
 import com.example.form.OrderForm;
+import com.example.repository.OrderRepository;
+import com.example.service.OrderItemService;
 import com.example.service.OrderService;
 
 @Controller
@@ -19,6 +22,9 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private OrderItemService orderItemService;
 	
 	@ModelAttribute
 	public OrderForm setUpForm() {
@@ -50,6 +56,19 @@ public class OrderController {
 		
 		orderService.load(form);
 		return "order_finished";
+	}
+	
+	/**
+	 * 注文確認商品一覧のメソッド.
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/showOrder")
+	public String showOrder(Integer id, Model model) {
+		Order order = orderItemService.deepLoad(id);
+		model.addAttribute("order", order);
+		return "order_confirm";
 	}
 
 }
