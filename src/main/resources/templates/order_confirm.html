@@ -13,6 +13,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+
 </head>
 <body>
 	<div class="container">
@@ -101,19 +102,19 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 							   <div th:each="orderTopping:${orderItem.orderToppingList}">
 								<ul>
 									<li th:text="${orderTopping.topping.name}"></li>
-									<li th:if="${orderItem.size} == 'M'">
-									 <span th:text="${#numbers.formatInteger(orderTopping.topping.priceM, 2, 'COMMA')}"></span>
+									<li th:if="${orderItem.size} == 'M'" style="list-style: none">
+									 <span th:text="${#numbers.formatInteger(orderTopping.topping.priceM, 2, 'COMMA')} + 円"></span>
 									</li>
-									<li th:if="${orderItem.size} == 'L'">
-									 <span th:text="${#numbers.formatInteger(orderTopping.topping.priceL, 2, 'COMMA')}"></span>
+									<li th:if="${orderItem.size} == 'L'" style="list-style: none">
+									 <span th:text="${#numbers.formatInteger(orderTopping.topping.priceL, 2, 'COMMA')} + 円"></span>
 									</li>
 								</ul>
 								</div>
 							</td>
 							<td>
-								<div class="text-center">
-									3,280円
-								</div>
+								<div class="text-center" th:text="${#numbers.formatInteger(orderItem.getSubTotal(), 2, 'COMMA')} + 円"></div>
+									
+								
 							</td>
 						</tr>
 					
