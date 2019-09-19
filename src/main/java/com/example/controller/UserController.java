@@ -37,11 +37,10 @@ public class UserController {
 	 */
 	@RequestMapping("toLogin")
 	public String toLogin(Model model,@RequestParam(required = false) String error) {
-		
-		System.err.println("login error:" + error);
+
 		if (error != null) {
-			
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
+
 			
 		}
 		return "login";

@@ -46,7 +46,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
 				<div class="well">
-					<form method="post" th:action="@{/excuteLogin}" th:object="${userForm}">
+					<form method="post" th:action="@{/excuteLogin}">
 						<fieldset>
 							<legend>
 								ログイン
@@ -56,17 +56,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 									</div>
 							<div class="form-group">
 								<label for="inputEmail">メールアドレス:</label>
-								<div th:if="${#fields.hasErrors('email')}"
-							         th:errors="*{email}"
-							         style="color:red"></div>
-								<input type="text" name="email" id="inputEmail" class="form-control"
+								
+								<input type="email" name="email" id="inputEmail" class="form-control"
 									placeholder="Email">
 							</div>
 							<div class="form-group">
 								<label for="inputPassword">パスワード:</label>
-								<div th:if="${#fields.hasErrors('password')}"
-							         th:errors="*{password}"
-							         style="color:red"></div>
+								
 								<input type="password" name="password" id="inputPassword" class="form-control"
 									placeholder="Password">
 							</div>
