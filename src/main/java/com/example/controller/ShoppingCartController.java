@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,13 +37,23 @@ public class ShoppingCartController {
 	 */
 	@RequestMapping("/addItemToCart")
 	public String addItemToCart(ShoppingCartForm form,BindingResult result, @AuthenticationPrincipal LoginUser loginUser, Model model) {
+		
+		/** ログインしてない状態でカートに入れる */
+		long seed = 1000;
+		Random random = new Random(seed);
+		int value = random.nextInt();
 
 		Order order = new Order();
 		order.setTotalPrice(0);
-//		int user_id = 0;
-
-		int user_id = loginUser.getUser().getId();
-		order.setUserId(user_id);
+		
+		int user_id = 0;
+        if(loginUser == null) {
+        	user_id = value;
+        	order.setUserId(user_id);
+        }else {
+        	user_id = loginUser.getUser().getId();
+        }
+        order.setUserId(user_id);
 
 		OrderItem orderItem = new OrderItem();
 		char[] size = form.getSize().toCharArray();
@@ -75,7 +86,18 @@ public class ShoppingCartController {
 	@RequestMapping("/showOrderItem")
 	public String showOrderItem(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		int status = 0;
-		int userId = loginUser.getUser().getId();
+		
+		/** ログインしてない状態でカートに入れる */
+		long seed = 1000;
+		Random random = new Random(seed);
+		int value = random.nextInt();
+		
+		int userId = 0;
+		if(loginUser == null) {
+			userId = value;
+		}else {
+			userId = loginUser.getUser().getId();
+		}
 		
 		List<Order> orderList = orderRepository.findByStatusAndUserId(status , userId);
 		if(orderList.size() == 0) {

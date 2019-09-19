@@ -80,6 +80,24 @@ public class OrderItem {
 		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
 				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
+	
+	/**
+	 * 商品の金額計算.
+	 * @return
+	 */
+	public Integer getSubTotal() {
+		
+         int ItemPrice = 0;
+		
+		if(size.equals('M')) {
+			 ItemPrice = item.getPriceM() + orderToppingList.size() * 200;
+		}else if(size.equals('L')) {
+			 ItemPrice = item.getPriceL() + orderToppingList.size() * 300;
+		}
+		
+	    int subTotalPrice = ItemPrice * quantity;
+		return subTotalPrice;
+	}
 
 
 	

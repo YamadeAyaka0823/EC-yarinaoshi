@@ -156,5 +156,31 @@ public class Order {
 				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
 	}
 	
+	/**
+	 * 合計金額の消費税.
+	 * @return
+	 */
+	public Integer getTax() {
+		double tax = 0;
+		for(OrderItem orderItem : orderItemList) {
+			
+			tax = tax + (orderItem.getSubTotal() * 0.08);
+		}
+      return (int)tax;
+	}
+	
+	/**
+	 * 全部の合計金額.
+	 * @return
+	 */
+	public Integer getCalcTotalPrice() {
+		
+		int totalPrice = 0;
+		for(OrderItem orderItem : orderItemList) {
+			totalPrice = totalPrice + (orderItem.getSubTotal() + getTax());
+		}
+		return totalPrice;
+	}
+	
 
 }
