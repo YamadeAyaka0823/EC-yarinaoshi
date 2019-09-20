@@ -48,6 +48,16 @@ public class ItemRepository {
 	}
 	
 	/**
+	 * 商品の全件検索を価格の高い順に検索するリポジトリ.
+	 * @return
+	 */
+	public List<Item> findAllHighPrice(){
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY price_m DESC";
+		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
+	/**
 	 * 名前で商品検索するリポジトリ.
 	 * @param name
 	 * @return

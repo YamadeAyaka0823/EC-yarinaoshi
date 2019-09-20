@@ -32,6 +32,7 @@ public class ItemController {
 		return "item_list";
 	}
 	
+	
 	/**
 	 * 名前で商品検索.
 	 * @param name

@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers( "/css/**"
 						, "/img/**"
 						, "/js/**"
+						, "/getAutoComplete/**"
 						);
 	}
 	

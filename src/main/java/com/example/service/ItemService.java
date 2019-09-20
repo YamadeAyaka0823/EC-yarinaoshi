@@ -30,6 +30,14 @@ public class ItemService {
 		return arrayTable(itemRepository.findAll());
 	}
 	
+	/**
+	 * 商品の全件検索を価格の高い順に検索するサービス.
+	 * @return
+	 */
+	public List<List<Item>> findAllHighPrice(){
+		return arrayTable(itemRepository.findAllHighPrice());
+	}
+	
 	public List<List<Item>> arrayTable(List<Item> item){
 		List<Item> item3List = new ArrayList<>();
 		

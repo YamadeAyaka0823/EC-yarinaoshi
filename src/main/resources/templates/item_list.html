@@ -103,10 +103,10 @@ $(function(){
 			</div>
 		</div>
          
-                        <select name="number" class="sort_btn">
-						 <option value="lowprice" selected>価格の低い順</option>
-						 <option value="highprice">価格の高い順</option>
-						</select>
+                  <form th:action="@{/priceSort/price}" method="post">
+						 <button name="priceSort" th:value="1">価格の低い順</button>
+						 <button name="priceSort" th:value="2">価格の高い順</button>						
+			      </form>
 		<!-- table -->
 		<div class="row">
 			<div
