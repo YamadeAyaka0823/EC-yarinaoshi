@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/* 各リスト項目のパディング設定 */
+input.form-control input-sm {
+  position: relative; padding: 3px 1em 3px .4em;
+}
+/* リスト全体の背景 */
+input.form-control input-sm {
+  border: 1px solid #c5c5c5;
+  background: #ffffff;
+  color: #333333;
+}
+/* リスト hover 時のカラー */
+input.form-control input-sm {
+  border: 1px solid #003eff;
+  background: #007fff;
+  font-weight: normal;
+  color: #ffffff;
+}
