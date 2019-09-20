@@ -4,13 +4,13 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Order;
-
 import com.example.form.OrderForm;
 import com.example.repository.OrderRepository;
 
@@ -58,6 +58,17 @@ public class OrderService {
 		 order.setTotalPrice(totalPrice);
 		 
 		 orderRepository.update(order);
+	}
+	
+	/**
+	 * 注文履歴を検索するサービス.
+	 * @param status
+	 * @param userId
+	 * @return
+	 */
+	public List<Order> findByStatusThan0UserId(Integer userId){
+		List<Order> orderList = orderRepository.findByStatusThan0AndUserId(userId);
+		return orderList;
 	}
 
 }

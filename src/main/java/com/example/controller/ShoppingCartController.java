@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,9 @@ import com.example.service.OrderItemService;
 public class ShoppingCartController {
 	
 	@Autowired
+	private HttpSession session;
+	
+	@Autowired
 	private OrderItemService orderItemService;
 	
 	@Autowired
@@ -38,22 +43,27 @@ public class ShoppingCartController {
 	@RequestMapping("/addItemToCart")
 	public String addItemToCart(ShoppingCartForm form,BindingResult result, @AuthenticationPrincipal LoginUser loginUser, Model model) {
 		
-		/** ログインしてない状態でカートに入れる */
-		long seed = 1000;
-		Random random = new Random(seed);
-		int value = random.nextInt();
+//		/** ログインしてない状態でカートに入れる */
+//		Random random = new Random();
+//		int value = random.nextInt(100000);
+//		session.setAttribute("value", value);
 
 		Order order = new Order();
-		order.setTotalPrice(0);
+		order.setTotalPrice(form.getIntTotalPrice());
 		
-		int user_id = 0;
+		int userId = 0;
         if(loginUser == null) {
-        	user_id = value;
-        	order.setUserId(user_id);
+        	if(session.getAttribute("value") == null) {
+        		Random random = new Random();
+        		int value = random.nextInt(100000);
+        		session.setAttribute("value", value);
+        	}
+        	userId = (int) session.getAttribute("value");
+        	order.setUserId(userId);
         }else {
-        	user_id = loginUser.getUser().getId();
+        	userId = loginUser.getUser().getId();
         }
-        order.setUserId(user_id);
+        order.setUserId(userId);
 
 		OrderItem orderItem = new OrderItem();
 		char[] size = form.getSize().toCharArray();
@@ -88,13 +98,14 @@ public class ShoppingCartController {
 		int status = 0;
 		
 		/** ログインしてない状態でカートに入れる */
-		long seed = 1000;
-		Random random = new Random(seed);
-		int value = random.nextInt();
+
+//		Random random = new Random();
+//		int value = random.nextInt(100000);
+//		session.setAttribute("value", value);
 		
 		int userId = 0;
 		if(loginUser == null) {
-			userId = value;
+			userId = (int) session.getAttribute("value");
 		}else {
 			userId = loginUser.getUser().getId();
 		}

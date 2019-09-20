@@ -49,7 +49,7 @@ public class OrderController {
 	 */
 	@RequestMapping("/load")
 	public String load(@Validated OrderForm form, BindingResult result, Model model) throws ParseException {
-		System.out.println(form);
+
 		if(result.hasErrors()) {
 			return index();
 		}

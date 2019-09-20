@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests() // 認可に関する設定
 			.antMatchers("/user/toLogin","/user/register","/user/insert", "/item/list", "/item/serch", "/item/detail", "/shoppingCart/addItemToCart",
-					      "/order/", "/order/load", "/getAutoComplete/list", "/shoppingCart/showOrderItem").permitAll() //「/」などのパスは全てのユーザに許可
+					      "/order/", "/order/load", "/getAutoComplete/list", "/shoppingCart/showOrderItem", "/shoppingCart/delete").permitAll() //「/」などのパスは全てのユーザに許可
 			//.antMatchers("/admin/**").hasRole("ADMIN") // /admin/から始まるパスはADMIN権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			//.antMatchers("/user/**").hasRole("USER") // /user/から始まるパスはUSER権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			.anyRequest().authenticated(); // それ以外のパスは認証が必要
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/user/toLogin") // ログイン画面に遷移させるパス(ログイン認証が必要なパスを指定してかつログインされていないとこのパスに遷移される)
 			.loginProcessingUrl("/excuteLogin") // ログインボタンを押した際に遷移させるパス(ここに遷移させれば自動的にログインが行われる)
 			.failureUrl("/user/toLogin?error=true") //ログイン失敗に遷移させるパス
-			.defaultSuccessUrl("/item/list", true) // 第1引数:デフォルトでログイン成功時に遷移させるパス
+			.defaultSuccessUrl("/checkSession/check", true) // 第1引数:デフォルトでログイン成功時に遷移させるパス
 			                                        // 第2引数: true :認証後常に第1引数のパスに遷移 
 			                                        //         false:認証されてなくて一度ログイン画面に飛ばされてもログインしたら指定したURLに遷移
 			.usernameParameter("email") // 認証時に使用するユーザ名のリクエストパラメータ名(今回はメールアドレスを使用)

@@ -179,6 +179,21 @@ public class OrderRepository {
 	}
 	
 	/**
+	 * 注文履歴を検索するリポジトリ.
+	 * @param status
+	 * @param userId
+	 * @return
+	 */
+	public List<Order> findByStatusThan0AndUserId(Integer userId){
+		StringBuilder sql = new StringBuilder();
+		sql.append(join5Table());
+		sql.append(" WHERE status > 0 AND user_id = :userId ");
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		List<Order> orderList = template.query(sql.toString(), param, ORDER_RESULT_SET_EXTRACTOR );
+		return orderList;
+	}
+	
+	/**
 	 * 注文商品を1件検索するリポジトリ.
 	 * @param orderId
 	 * @return
@@ -228,6 +243,12 @@ public class OrderRepository {
 	public void update(Order order) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		String sql = "UPDATE orders SET total_price = :totalPrice, status = :status, order_date =:orderDate, destination_name =:destinationName, destination_email =:destinationEmail, destination_zipcode =:destinationZipcode, destination_address =:destinationAddress, destination_tel =:destinationTel, delivery_time =:deliveryTime, payment_method =:paymentMethod WHERE id = :id";
+		template.update(sql, param);
+	}
+	
+	public void deleteByOrderId(Integer id) {
+		String sql = "DELETE FROM orders WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		template.update(sql, param);
 	}
 
