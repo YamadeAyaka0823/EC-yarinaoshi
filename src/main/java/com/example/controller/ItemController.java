@@ -26,9 +26,13 @@ public class ItemController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public String list(Model model) {
-		List<List<Item>> itemList = itemService.findAll();
+	public String list(Model model, Integer pageNumber) {
+		if(pageNumber == null) {
+			pageNumber = 1;
+		}
+		List<List<Item>> itemList = itemService.findAll(pageNumber);
 		model.addAttribute("itemList", itemList);
+		model.addAttribute("pageNumber", pageNumber);
 		return "item_list";
 	}
 	
@@ -40,12 +44,17 @@ public class ItemController {
 	 * @return
 	 */
 	@RequestMapping("/serch")
-	public String serch(String name, Model model) {
-		List<List<Item>> itemList = itemService.findByName(name);
+	public String serch(String name, Model model, Integer pageNumber) {
+		if(pageNumber == null) {
+			pageNumber = 1;
+		}
+		List<List<Item>> itemList = itemService.findByName(name, pageNumber);
+		model.addAttribute("name", name);
+		model.addAttribute("pageNumber", pageNumber);
 		
 		if(itemList.size() == 0) {
 			model.addAttribute("message", "１件もありませんでした");
-			return list(model);
+			return "item/list";
 		}else {
 			model.addAttribute("itemList", itemList);	
 		}

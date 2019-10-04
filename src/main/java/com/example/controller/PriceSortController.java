@@ -24,11 +24,15 @@ public class PriceSortController {
 	 * @return
 	 */
 	@RequestMapping("/price")
-	public String price(ItemForm form, Model model) {
+	public String price(ItemForm form, Model model, Integer pageNumber) {
+		if(pageNumber == null) {
+			pageNumber = 1;
+		}
 		
 		if(form.getIntPriceSort() == 1) {
-			List<List<Item>> itemList = itemService.findAll();
+			List<List<Item>> itemList = itemService.findAll(pageNumber);
 			model.addAttribute("itemList", itemList);
+			model.addAttribute("pageNumber", pageNumber);
 			
 		}else if(form.getIntPriceSort() == 2) {
 			List<List<Item>> itemList = itemService.findAllHighPrice();

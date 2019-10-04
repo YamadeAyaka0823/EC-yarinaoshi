@@ -41,8 +41,9 @@ public class ItemRepository {
 	 * 商品の全件検索を行うリポジトリ.
 	 * @return
 	 */
-	public List<Item> findAll(){
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY price_m";
+	public List<Item> findAll(Integer pageNumber){
+		int offset = (pageNumber - 1) * 6;
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY price_m LIMIT 6 OFFSET " + offset;
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
@@ -62,8 +63,9 @@ public class ItemRepository {
 	 * @param name
 	 * @return
 	 */
-	public List<Item> findByName(String name){
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name ORDER BY price_m";
+	public List<Item> findByName(String name, Integer pageNumber){
+		int offset = (pageNumber - 1) * 6;
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name ORDER BY price_m LIMIT 6 OFFSET " + offset;
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;

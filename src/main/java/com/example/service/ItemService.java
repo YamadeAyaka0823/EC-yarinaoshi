@@ -26,8 +26,8 @@ public class ItemService {
 	 * 全件検索を行うためのサービス.
 	 * @return
 	 */
-	public List<List<Item>> findAll(){
-		return arrayTable(itemRepository.findAll());
+	public List<List<Item>> findAll(Integer pageNumber){
+		return arrayTable(itemRepository.findAll(pageNumber));
 	}
 	
 	/**
@@ -63,8 +63,8 @@ public class ItemService {
 	 * @param form
 	 * @return
 	 */
-	public List<List<Item>> findByName(String name){
-		return arrayTable(itemRepository.findByName(name));
+	public List<List<Item>> findByName(String name, Integer pageNumber){
+		return arrayTable(itemRepository.findByName(name, pageNumber));
 	}
 	
 	/**
