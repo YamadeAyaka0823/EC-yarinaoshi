@@ -3,14 +3,13 @@ package com.example.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
-
 import com.example.domain.Topping;
+import com.example.form.ItemForm;
 import com.example.service.ItemService;
 
 @Controller
@@ -44,7 +43,9 @@ public class ItemController {
 	 * @return
 	 */
 	@RequestMapping("/serch")
-	public String serch(String name, Model model, Integer pageNumber) {
+	public String serch(String name, Model model, Integer pageNumber, ItemForm form) {
+		System.out.println(form);
+		System.out.println(pageNumber);
 		if(pageNumber == null) {
 			pageNumber = 1;
 		}
@@ -57,6 +58,19 @@ public class ItemController {
 			return "item/list";
 		}else {
 			model.addAttribute("itemList", itemList);	
+		}
+//		return "item_list";
+		
+		if("1".equals(form.getPriceSort())) {
+			List<List<Item>> itemList1 = itemService.findAll(pageNumber);
+			model.addAttribute("itemList", itemList1);
+			model.addAttribute("pageNumber", pageNumber);
+			
+		}else if("2".equals(form.getPriceSort())) {
+			List<List<Item>> itemList1 = itemService.findAllHighPrice();
+			model.addAttribute("itemList", itemList1);
+		
+			
 		}
 		return "item_list";
 	}

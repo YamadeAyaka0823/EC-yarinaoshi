@@ -7,9 +7,9 @@ public class ItemForm {
 	/** 値段の順番 */
 	private String priceSort;
 	
-	public Integer getIntPriceSort() {
-		return Integer.parseInt(priceSort);
-	}
+//	public Integer getIntPriceSort() {
+//		return Integer.parseInt(priceSort);
+//	}
 
 	public String getName() {
 		return name;

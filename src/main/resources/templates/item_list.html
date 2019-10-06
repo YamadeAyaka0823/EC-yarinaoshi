@@ -86,8 +86,10 @@ $(function(){
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" action="#" th:action="@{/item/serch}" th:object="${searchForm}" class="form-horizontal" name="form" id="form">
+						<form method="post" action="#" th:action="@{/item/serch}" th:object="${itemForm}" class="form-horizontal" name="form" id="form">
 							<input type="hidden" name="pageNumber" th:value="${pageNumber}" />
+							<input type="hidden" name="priceSort" th:value="${priceSort}"  class="price"/>
+							
 							<div class="form-group">
 							<div class="ui-widget">
 								<label for="serchName" class="control-label col-sm-2">商品名</label>
@@ -107,10 +109,10 @@ $(function(){
 			</div>
 		</div>
          
-                  <form th:action="@{/priceSort/price}" method="post">
-						 <button name="priceSort" th:value="1">価格の低い順</button>
-						 <button name="priceSort" th:value="2">価格の高い順</button>						
-			      </form>
+                
+						 <button id="price" class="price"  name="priceSort" th:value="1">価格の低い順</button>
+						 <button id="price" class="price" name="priceSort" th:value="2">価格の高い順</button>						
+			      
 		<!-- table -->
 		<div class="row">
 			<div
@@ -139,8 +141,8 @@ $(function(){
 	</div>
 
 	    <ul class="pager">
-	      <li class="prev"><button id="prev" type="submit" class="pageNumber" value="pre">&larr; prev</button></li>
-          <li class="next"><button id="next" type="submit" class="pageNumber" value="next">next &rarr;</button></li>
+	      <li class="prev"><button id="prev" type="submit" class="pageNumber" th:value="pre">&larr; prev</button></li>
+          <li class="next"><button id="next" type="submit" class="pageNumber" th:value="next">next &rarr;</button></li>
         </ul>
 
 	

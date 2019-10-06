@@ -21,3 +21,24 @@ $(function(){
 		fm.submit();
 	})
 });
+
+$(function(){
+	$(".price").on("click", function(){
+		var fm = document.getElementById("form");
+		var action = $(this).val();
+		var pushButton = parseInt($('#form [name=priceSort]').val());
+		if(action == "1"){
+			$('#form [name=priceSort]').val(pushButton = 1);
+		} else{
+			$('#form [name=priceSort]').val(pushButton = 2);
+		}
+        fm.submit();
+	})
+});
+
+//$(function(){
+//	$(".price2").on("click", function(){
+//		var fm = document.getElementById("form");
+//        fm.submit();
+//	})
+//});
