@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Item;
 import com.example.domain.Topping;
+import com.example.form.ItemForm;
 import com.example.repository.ItemRepository;
 import com.example.repository.ToppingRepository;
 
@@ -26,16 +27,16 @@ public class ItemService {
 	 * 全件検索を行うためのサービス.
 	 * @return
 	 */
-	public List<List<Item>> findAll(Integer pageNumber){
-		return arrayTable(itemRepository.findAll(pageNumber));
+	public List<List<Item>> findAll(ItemForm form){
+		return arrayTable(itemRepository.findAll(form.getPageNumber()));
 	}
 	
 	/**
 	 * 商品の全件検索を価格の高い順に検索するサービス.
 	 * @return
 	 */
-	public List<List<Item>> findAllHighPrice(){
-		return arrayTable(itemRepository.findAllHighPrice());
+	public List<List<Item>> findAllHighPrice(ItemForm form){
+		return arrayTable(itemRepository.findAllHighPrice(form.getPageNumber()));
 	}
 	
 	public List<List<Item>> arrayTable(List<Item> item){
@@ -63,8 +64,8 @@ public class ItemService {
 	 * @param form
 	 * @return
 	 */
-	public List<List<Item>> findByName(String name, Integer pageNumber){
-		return arrayTable(itemRepository.findByName(name, pageNumber));
+	public List<List<Item>> findByName(String name, ItemForm form){
+		return arrayTable(itemRepository.findByName(name, form.getPageNumber()));
 	}
 	
 	/**

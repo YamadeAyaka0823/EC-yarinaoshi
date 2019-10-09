@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
@@ -19,19 +20,23 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 	
+	@ModelAttribute
+	public ItemForm setUpForm() {
+		return new ItemForm();
+	}
+	
 	/**
 	 * 商品の一覧.
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public String list(Model model, Integer pageNumber) {
-		if(pageNumber == null) {
-			pageNumber = 1;
+	public String list(Model model, ItemForm form) {
+		if(form.getPageNumber() == null) {
+			form.setPageNumber(1);
 		}
-		List<List<Item>> itemList = itemService.findAll(pageNumber);
+		List<List<Item>> itemList = itemService.findAll(form);
 		model.addAttribute("itemList", itemList);
-		model.addAttribute("pageNumber", pageNumber);
 		return "item_list";
 	}
 	
@@ -43,15 +48,13 @@ public class ItemController {
 	 * @return
 	 */
 	@RequestMapping("/serch")
-	public String serch(String name, Model model, Integer pageNumber, ItemForm form) {
+	public String serch(String name, Model model, ItemForm form) {
 		System.out.println(form);
-		System.out.println(pageNumber);
-		if(pageNumber == null) {
-			pageNumber = 1;
+		if(form.getPageNumber() == null || form.getPageNumber() >= 4 || form.getPageNumber() <= 0) {
+			form.setPageNumber(1);
 		}
-		List<List<Item>> itemList = itemService.findByName(name, pageNumber);
+		List<List<Item>> itemList = itemService.findByName(name, form);
 		model.addAttribute("name", name);
-		model.addAttribute("pageNumber", pageNumber);
 		
 		if(itemList.size() == 0) {
 			model.addAttribute("message", "１件もありませんでした");
@@ -62,12 +65,11 @@ public class ItemController {
 //		return "item_list";
 		
 		if("1".equals(form.getPriceSort())) {
-			List<List<Item>> itemList1 = itemService.findAll(pageNumber);
+			List<List<Item>> itemList1 = itemService.findAll(form);
 			model.addAttribute("itemList", itemList1);
-			model.addAttribute("pageNumber", pageNumber);
 			
 		}else if("2".equals(form.getPriceSort())) {
-			List<List<Item>> itemList1 = itemService.findAllHighPrice();
+			List<List<Item>> itemList1 = itemService.findAllHighPrice(form);
 			model.addAttribute("itemList", itemList1);
 		
 			

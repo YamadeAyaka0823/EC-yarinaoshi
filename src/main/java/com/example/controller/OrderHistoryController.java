@@ -31,8 +31,8 @@ public class OrderHistoryController {
 	public String history(Model model, @AuthenticationPrincipal LoginUser loginUser){
 		Integer userId = loginUser.getUser().getId();
 		
-		List<Order> orderList = orderService.findByStatusThan0UserId(userId);
-		model.addAttribute("orderList", orderList);
+		List<Order> orderHistoryList = orderService.findByStatusThan0UserId(userId);
+		model.addAttribute("orderHistoryList", orderHistoryList);
 		return "order_history";
 	}
 

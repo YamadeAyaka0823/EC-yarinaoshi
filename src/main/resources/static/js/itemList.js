@@ -23,16 +23,18 @@ $(function(){
 });
 
 $(function(){
-	$(".price").on("click", function(){
-		var fm = document.getElementById("form");
-		var action = $(this).val();
-		var pushButton = parseInt($('#form [name=priceSort]').val());
-		if(action == "1"){
-			$('#form [name=priceSort]').val(pushButton = 1);
-		} else{
-			$('#form [name=priceSort]').val(pushButton = 2);
-		}
-        fm.submit();
+	$(".price1").on("click", function(){
+//		var fm = document.getElementById("form");
+		$('#form [name=pageNumber]').val(1);
+		$('#form [name=priceSort]').val($(this).val());
+//		var action = $(this).val();
+//		var pushButton = parseInt($('#form [name=priceSort]').val());
+//		if(action == "1"){
+//			$('#form [name=priceSort]').val($(this).val());
+//		} else{
+//			$('#form [name=priceSort]').val(2);
+//		}
+		document.getElementById("form").submit();
 	})
 });
 

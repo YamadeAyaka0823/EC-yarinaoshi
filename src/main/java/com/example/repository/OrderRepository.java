@@ -188,6 +188,7 @@ public class OrderRepository {
 		StringBuilder sql = new StringBuilder();
 		sql.append(join5Table());
 		sql.append(" WHERE status > 0 AND user_id = :userId ");
+		sql.append(" ORDER BY order_date DESC ");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Order> orderList = template.query(sql.toString(), param, ORDER_RESULT_SET_EXTRACTOR );
 		return orderList;

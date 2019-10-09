@@ -67,8 +67,8 @@ public class OrderService {
 	 * @return
 	 */
 	public List<Order> findByStatusThan0UserId(Integer userId){
-		List<Order> orderList = orderRepository.findByStatusThan0AndUserId(userId);
-		return orderList;
+		List<Order> orderHistoryList = orderRepository.findByStatusThan0AndUserId(userId);
+		return orderHistoryList;
 	}
 
 }
