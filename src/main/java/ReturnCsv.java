@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -46,15 +50,91 @@ public class ReturnCsv {
 				orderList.add(order);
 				
 			}
-			System.out.println(orderList);
+			
+			try {
+				FileWriter f = new FileWriter("C://env/order_20191010.csv", false);
+				PrintWriter p = new PrintWriter(new BufferedWriter(f));
+				
+				p.print("id");
+				p.print(",");
+				p.print("user_id");
+				p.print(",");
+				p.print("status");
+				p.print(",");
+				p.print("total_price");
+				p.print(",");
+				p.print("order_date");
+				p.print(",");
+				p.print("destination_name");
+				p.print(",");
+				p.print("destination_email");
+				p.print(",");
+				p.print("destination_zipcode");
+				p.print(",");
+				p.print("destination_address");
+				p.print(",");
+				p.print("destination_tel");
+				p.print(",");
+				p.print("delivery_time");
+				p.print(",");
+				p.print("payment_method");
+				p.println();
+				
+				for(int i = 0; i < orderList.size(); i++) {
+					p.print(orderList.get(i));
+					p.println();
+				}
+				p.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
+	
+//	public static void exportCsv(Order orderList) {
+//		try {
+//			FileWriter f = new FileWriter("C://env/order_20191010.csv", false);
+//			PrintWriter p = new PrintWriter(new BufferedWriter(f));
+//			
+//			p.print("id");
+//			p.print(",");
+//			p.print("user_id");
+//			p.print(",");
+//			p.print("status");
+//			p.print(",");
+//			p.print("total_price");
+//			p.print(",");
+//			p.print("order_date");
+//			p.print(",");
+//			p.print("destination_name");
+//			p.print(",");
+//			p.print("destination_email");
+//			p.print(",");
+//			p.print("destination_zipcode");
+//			p.print(",");
+//			p.print("destination_address");
+//			p.print(",");
+//			p.print("destination_tel");
+//			p.print(",");
+//			p.print("delivery_time");
+//			p.print(",");
+//			p.print("payment_method");
+//			p.println();
+//			
+//			for(int i = 0; i < orderList.length; i++) {
+//				p.print(orderList[i]);
+//				p.println();
+//			}
+//			p.close();
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//		}
+//	}
 
 }

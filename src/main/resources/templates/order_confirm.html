@@ -327,11 +327,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 													name="paymentMethod" th:text="${paymentMethod}" value="2">
 												クレジットカード
 											</label><br><br>
-											クレジットカード番号 : <input type="text" name="cardNumber"><br><br>
-											有効期限 : <select id="month"><option value="0">--</option></select>
-											           <select id="year"><option value="0">----</option></select><br><br>
-											カード名義人 : <input type="text" name="cardName"><br><br>
-											セキュリティコード : <input type="text" name="securityCode">
 										</div>
 									</div>
 								</td>
@@ -351,6 +346,17 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			</div>
 		</form>
 	</div>
+	<form th:action="@{/card/confirm}" method="post">
+	    ユーザID<input type="text" name="userId" th:value="${order.userId}" />
+	    合計金額<input type="text" name="amount" th:value="${order.totalPrice}" />
+	    注文No<input type="text" name="orderNumber" th:value="${order.id}" />
+		クレジットカード番号 : <input type="text" name="cardNumber" th:text="${cardNumber}"><br><br>
+		有効期限 : <select id="month" name="cardExpMonth"><option value="0" th:text="${cardExpYear}">--</option></select>
+	               <select id="year" name="cardExpYear"><option value="0" th:text="${cardExpMonth}">----</option></select><br><br>
+	    カード名義人 : <input type="text" name="cardName" th:text="${cardName}"><br><br>
+		セキュリティコード : <input type="text" name="cardCvv" th:text="${cardCvv}">
+	    <button>送信</button>
+	</form>
 	<!-- end container -->
 
 	<script th:src="@{js/bootstrap.min.js}"></script>

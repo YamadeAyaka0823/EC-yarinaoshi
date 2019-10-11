@@ -49,7 +49,7 @@ public class ItemController {
 	 */
 	@RequestMapping("/serch")
 	public String serch(String name, Model model, ItemForm form) {
-		System.out.println(form);
+
 		if(form.getPageNumber() == null || form.getPageNumber() >= 4 || form.getPageNumber() <= 0) {
 			form.setPageNumber(1);
 		}

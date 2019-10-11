@@ -35,16 +35,7 @@ public class OrderForm {
 	private String paymentMethod;
 	/** 注文日 */
 	private String orderDate;
-	/** クレジットカード番号 */
-	private String cardNumber;
-	/** 有効期限(月) */
-	private String expirationMonth;
-	/** 有効期限(年) */
-	private String expirationYear;
-	/** カード名義人 */
-	private String cardName;
-	/** セキュリティコード */
-	private String securityCode;
+
 	
 
 	
@@ -54,14 +45,6 @@ public class OrderForm {
 	
 	public Integer getIntPaymentMethod() {
 		return Integer.parseInt(paymentMethod);
-	}
-	
-	public Integer getIntCardNumber() {
-		return Integer.parseInt(cardNumber);
-	}
-	
-	public Integer getIntSecurityCode() {
-		return Integer.parseInt(securityCode);
 	}
 
 	public String getOrderId() {
@@ -144,55 +127,16 @@ public class OrderForm {
 		this.orderDate = orderDate;
 	}
 
-	public String getCardNumber() {
-		return cardNumber;
-	}
-
-	public void setCardNumber(String cardNumber) {
-		this.cardNumber = cardNumber;
-	}
-
-	public String getExpirationMonth() {
-		return expirationMonth;
-	}
-
-	public void setExpirationMonth(String expirationMonth) {
-		this.expirationMonth = expirationMonth;
-	}
-
-	public String getExpirationYear() {
-		return expirationYear;
-	}
-
-	public void setExpirationYear(String expirationYear) {
-		this.expirationYear = expirationYear;
-	}
-
-	public String getCardName() {
-		return cardName;
-	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
-
-	public String getSecurityCode() {
-		return securityCode;
-	}
-
-	public void setSecurityCode(String securityCode) {
-		this.securityCode = securityCode;
-	}
-
 	@Override
 	public String toString() {
 		return "OrderForm [orderId=" + orderId + ", destinationName=" + destinationName + ", destinationEmail="
 				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
 				+ ", deliveryHour=" + deliveryHour + ", paymentMethod=" + paymentMethod + ", orderDate=" + orderDate
-				+ ", cardNumber=" + cardNumber + ", expirationMonth=" + expirationMonth + ", expirationYear="
-				+ expirationYear + ", cardName=" + cardName + ", securityCode=" + securityCode + "]";
+				+ "]";
 	}
+	
+
 
 
 

@@ -33,19 +33,12 @@ public class Order {
 	/** ユーザdomain */
 	private User user;
 	
-	/** クレジットカード番号 */
-	private Integer cardNumber;
-	/** 有効期限 */
-	private Date expirationDate;
-	/** カード名義人 */
-	private String cardName;
-	/** セキュリティコード */
-	private Integer securityCode;
-	
 	private List<OrderItem> orderItemList;
 
 
 	
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -150,38 +143,6 @@ public class Order {
 		this.user = user;
 	}
 
-	public Integer getCardNumber() {
-		return cardNumber;
-	}
-
-	public void setCardNumber(Integer cardNumber) {
-		this.cardNumber = cardNumber;
-	}
-
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-	public String getCardName() {
-		return cardName;
-	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
-
-	public Integer getSecurityCode() {
-		return securityCode;
-	}
-
-	public void setSecurityCode(Integer securityCode) {
-		this.securityCode = securityCode;
-	}
-
 	public List<OrderItem> getOrderItemList() {
 		return orderItemList;
 	}
@@ -198,9 +159,7 @@ public class Order {
 				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
 				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", cardNumber=" + cardNumber
-				+ ", expirationDate=" + expirationDate + ", cardName=" + cardName + ", securityCode=" + securityCode
-				+ ", orderItemList=" + orderItemList + "]";
+				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
 	}
 
 	/**
