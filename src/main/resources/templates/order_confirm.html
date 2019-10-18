@@ -15,6 +15,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <script th:src="@{https://ajaxzip3.github.io/ajaxzip3.js}" charset="UTF-8"></script>
     <script th:src="@{https://code.jquery.com/jquery-1.12.4.js}"></script>
     <script th:src="@{/js/pulldown.js}"></script>
+    <script th:src="@{/js/webAPI}"></script>
 </head>
 <body>
 	<div class="container">
@@ -341,22 +342,25 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					    <input type="hidden" name="orderId" th:value="${order.id}">
 					    <input type="hidden" name="orderDate">
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
+						
+						<div class="alert alert-danger" style="color: red" th:if="${cardInfoError}">
+			                        <span th:text="${cardInfoError}"></span>
+			                    </div>
+						
+	                     ユーザID<input type="text" name="user_id" th:value="${order.userId}" /><br>
+	                     合計金額<input type="text" name="amount" th:value="${order.totalPrice}" /><br>
+	                    注文No<input type="text" name="order_number" th:value="${order.id}" /><br>
+		                クレジットカード番号 : <input type="text" name="card_number" th:text="${card_number}"><br><br>
+		                有効期限 : <select id="month" name="card_exp_month"><option value="0" th:text="${card_exp_month}">--</option></select>
+	                               <select id="year" name="card_exp_year"><option value="0" th:text="${card_exp_year}">----</option></select><br><br>
+	                    カード名義人 : <input type="text" name="card_name" th:text="${card_name}"><br><br>
+		                セキュリティコード : <input type="text" name="card_cvv" th:text="${card_cvv}">
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-	<form th:action="@{/card/confirm}" method="post">
-	    ユーザID<input type="text" name="userId" th:value="${order.userId}" />
-	    合計金額<input type="text" name="amount" th:value="${order.totalPrice}" />
-	    注文No<input type="text" name="orderNumber" th:value="${order.id}" />
-		クレジットカード番号 : <input type="text" name="cardNumber" th:text="${cardNumber}"><br><br>
-		有効期限 : <select id="month" name="cardExpMonth"><option value="0" th:text="${cardExpYear}">--</option></select>
-	               <select id="year" name="cardExpYear"><option value="0" th:text="${cardExpMonth}">----</option></select><br><br>
-	    カード名義人 : <input type="text" name="cardName" th:text="${cardName}"><br><br>
-		セキュリティコード : <input type="text" name="cardCvv" th:text="${cardCvv}">
-	    <button>送信</button>
-	</form>
+	   
 	<!-- end container -->
 
 	<script th:src="@{js/bootstrap.min.js}"></script>

@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.text.ParseException;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
 import com.example.form.OrderForm;
-
 import com.example.service.OrderItemService;
 import com.example.service.OrderService;
 
@@ -25,6 +26,9 @@ public class OrderController {
 	
 	@Autowired
 	private OrderItemService orderItemService;
+	
+	@Autowired
+	private HttpSession session;
 	
 	@ModelAttribute
 	public OrderForm setUpForm() {
@@ -54,8 +58,13 @@ public class OrderController {
 			return index();
 		}
 		
-		orderService.load(form);
-		return "order_finished";
+		if(form.getIntPaymentMethod().equals(1)) {
+			orderService.load(form);
+			return "order_finished";
+		}
+			return "forward:/card/confirm";
+		
+		
 	}
 	
 	/**
@@ -69,6 +78,25 @@ public class OrderController {
 		Order order = orderItemService.deepLoad(id);
 		model.addAttribute("order", order);
 		return "order_confirm";
+	}
+	
+	/**
+	 * APIの処理を実行
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping("/paymentApiResponse")
+	public String confirmApiResponse(Model model) {
+		String status = (String) session.getAttribute("card");
+		System.out.println(status);
+		if(status.equals("success")) {
+			return "order_finished";
+//			return "redirect:/order/load";
+		}else {
+			model.addAttribute("cardInfoError", "カード情報が不正です");
+//			return "redirect:/order/showOrder";
+			return "order_finished";
+		}
 	}
 
 }
