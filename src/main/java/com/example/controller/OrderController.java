@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,6 +43,7 @@ public class OrderController {
 	@RequestMapping("/")
 	public String index() {
 		return "order_confirm";
+//		return "forward:/shoppingCart/showOrderItem";
 	}
 	
 	/**
@@ -53,9 +55,21 @@ public class OrderController {
 	 */
 	@RequestMapping("/load")
 	public String load(@Validated OrderForm form, BindingResult result, Model model) throws ParseException {
-
+		
+		LocalDate localDate = LocalDate.now();
+		LocalDate inputDate = LocalDate.parse(form.getDeliveryTime());
+		boolean check = localDate.isBefore(inputDate);
+		
+		if(localDate.equals(inputDate)) {
+			result.rejectValue("deliveryTime", "", "本日のお届けは出来ません");
+		}
+		
+		if(check == false) {
+			result.rejectValue("deliveryTime", "", "本日以降の日にちを指定してください");
+		}
+		
 		if(result.hasErrors()) {
-			return index();
+			return showOrder(form.getIntOrderId(),model);
 		}
 		
 		if(form.getIntPaymentMethod().equals(1)) {

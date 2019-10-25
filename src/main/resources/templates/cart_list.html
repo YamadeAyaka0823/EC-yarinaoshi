@@ -79,6 +79,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 							<th>
 							</th>
 						</tr>
+													
+							    <div th:if="${order.orderItemList.size() == 0}">
+		                            カートに商品がありません
+		                        </div>
 						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
 								<div class="center">

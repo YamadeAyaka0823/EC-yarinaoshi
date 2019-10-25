@@ -205,6 +205,9 @@ public class OrderRepository {
 		sql.append(" WHERE A.id = :id ");
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		List<Order> orderList = template.query(sql.toString(), param, ORDER_RESULT_SET_EXTRACTOR);
+		if(orderList.size() == 0) {
+			return null;
+		}
 		return orderList.get(0);
 	}
 	

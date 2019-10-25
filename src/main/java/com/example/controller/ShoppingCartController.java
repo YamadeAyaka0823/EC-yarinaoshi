@@ -115,11 +115,12 @@ public class ShoppingCartController {
 			Order order = new Order();
 			order.setOrderItemList(new ArrayList<OrderItem>());
 			model.addAttribute("order", order);
-			
+//			session.setAttribute("order", order);
 		}else {
 			Order order = orderList.get(0);
 			order = orderRepository.deepLoad(order.getId());
 			model.addAttribute("order", order);
+//			session.setAttribute("order", order);
 			
 		}
 		
