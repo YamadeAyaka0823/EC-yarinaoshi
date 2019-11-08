@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,23 @@ public class UserService {
 	 */
 	public User findByEmail(UserForm form) {
 		return userRepository.findByEmail(form.getEmail());
+	}
+	
+	/**
+	 * 管理者画面でUser情報一覧のためのサービス.
+	 * @return
+	 */
+	public List<User> findAll(){
+		return userRepository.findAll();
+	}
+	
+	/**
+	 * 管理者画面でUser詳細取得のためのサービス.
+	 * @param id
+	 * @return
+	 */
+	public User load(Integer id) {
+		return userRepository.load(id);
 	}
 
 

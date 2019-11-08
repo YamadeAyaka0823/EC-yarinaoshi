@@ -55,6 +55,31 @@ public class UserRepository {
 		return userList.get(0);
 	}
 	
+	/**
+	 * 管理者画面でUser情報の一覧のためのリポジトリ.
+	 * @return
+	 */
+	public List<User> findAll(){
+		String sql = "SELECT id, name, email, password, zipcode, address, telephone FROM users ORDER BY id";
+		List<User> userList = template.query(sql, USER_ROW_MAPPER);
+		return userList;
+	}
+	
+	/**
+	 * 管理者画面でUserの詳細情報取得のためのリポジトリ.
+	 * @param id
+	 * @return
+	 */
+	public User load(Integer id) {
+		String sql = "SELECT id, name, email, password, zipcode, address, telephone FROM users WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		if(userList.size() == 0) {
+			return null;
+		}
+		return userList.get(0);
+	}
+	
 
 
 }

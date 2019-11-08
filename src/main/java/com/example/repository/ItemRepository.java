@@ -1,4 +1,4 @@
-package com.example.repository;
+	package com.example.repository;
 
 import java.util.List;
 
@@ -124,6 +124,46 @@ public class ItemRepository {
 	public void update(OrderItem orderItem) {
 		String sql = "UPDATE order_items SET order_id = :orderId WHERE id = :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderItem.getOrderId()).addValue("id", orderItem.getId());
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 管理者画面で商品一覧を表示するためのリポジトリ(ページング機能なし).
+	 * @return
+	 */
+	public List<Item> findAllNotPagenation(){
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY id";
+		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
+	/**
+	 * 管理者側で商品内容を更新するリポジトリ.
+	 * @param item
+	 */
+	public void itemUpdate(Item item) {
+		String sql = "UPDATE items SET name = :name, description = :description, price_m = :priceM, price_l = :priceL, image_path = :imagePath, deleted = :deleted WHERE id = :id";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(item);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 管理者側で商品を削除するリポジトリ.
+	 * @param id
+	 */
+	public void itemDeleteById(Integer id) {
+		String sql = "DELETE FROM items WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 管理者側で商品を追加するリポジトリ.
+	 * @param item
+	 */
+	public void itemInsert(Item item) {
+		String sql = "INSERT INTO items(name, description, price_m, price_l, image_path, deleted) VALUES(:name, :description, :priceM, :priceL, :imagePath, :deleted)";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(item);
 		template.update(sql, param);
 	}
 	

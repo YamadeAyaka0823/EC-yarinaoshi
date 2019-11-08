@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Item;
 import com.example.domain.Topping;
+import com.example.form.AdministratorItemAddForm;
 import com.example.form.ItemForm;
 import com.example.repository.ItemRepository;
 import com.example.repository.ToppingRepository;
@@ -103,6 +104,45 @@ public class ItemService {
 		}
 		toppingAllList.add(topping3List);
 		return toppingAllList;
+	}
+	
+	/**
+	 * 管理者画面で商品一覧を表示するためのサービス(ページング機能なし).
+	 * @return
+	 */
+	public List<List<Item>> findAllNotPagenation(){
+        return arrayTable(itemRepository.findAllNotPagenation());
+	}
+	
+	/**
+	 * 管理者側で商品内容を更新するためのサービス.
+	 * @param form
+	 */
+	public void itemUpdate(Item item) {
+		itemRepository.itemUpdate(item);
+	}
+	
+	/**
+	 * 管理者側で商品を削除するサービス.
+	 * @param id
+	 */
+	public void itemDeleteById(Integer id) {
+		itemRepository.itemDeleteById(id);
+	}
+	
+	/**
+	 * 管理者側で商品を追加するサービス.
+	 * @param form
+	 */
+	public void itemInsert(AdministratorItemAddForm form) {
+		Item item = new Item();
+		item.setName(form.getName());
+		item.setDescription(form.getDescription());
+		item.setPriceM(form.getIntPriceM());
+		item.setPriceL(form.getIntPriceL());
+		item.setImagePath(form.getImagePath());
+		item.setDeleted(form.getDeleted());
+		itemRepository.itemInsert(item);
 	}
 	
 
