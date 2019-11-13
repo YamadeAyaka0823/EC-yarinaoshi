@@ -38,7 +38,7 @@
 						<li class="active"><a href="list.html">ユーザ管理</a></li>
 					</ul>
 					<p class="navbar-text navbar-right">
-					    <a th:href="@{/administrator/itemList}">商品関連</a>
+					    <a th:href="@{/administrator/itemOrTopping}">商品関連</a>
 					    &nbsp;&nbsp;&nbsp;
 						<span th:text="${session.administratorName + 'さん'}">山田さん</span>こんにちは！
 						&nbsp;&nbsp;&nbsp;
@@ -62,7 +62,7 @@
 
 <!-- ここから上を編集する必要はありません -->
 
-
+                <form th:action="@{/administrator/delete}" method="post">
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -84,9 +84,16 @@
 							<td>
 								<span th:text="${user.telephone}">3人</span>
 							</td>
+							<td>
+								<div class="text-center">
+									<button type="submit" class="btn btn-primary">削除</button>
+									<input type="hidden" name="id" th:value="${user.id}">
+								</div>
+							</td>
 						</tr>
 					</tbody>
 				</table>
+				</form>
 
 
 <!-- ここから下を編集する必要はありません -->

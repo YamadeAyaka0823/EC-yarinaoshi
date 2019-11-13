@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+th{
+	text-align: center;
+	vertical-align: middle;
+}
+
+#button{
+	position: static;
+	right: 100px;
+}

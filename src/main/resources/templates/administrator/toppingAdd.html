@@ -29,10 +29,9 @@
 				
 <!-- ここから上を編集する必要はありません -->
 
-					<form method="post" th:action="@{/administrator/itemAdd}" enctype="multipart/form-data" th:object="${administratorItemAddForm}">
-					<input type="hidden" name="deleted" th:value="${false}">
+					<form method="post" th:action="@{/administrator/toppingInsert}" enctype="multipart/form-data" th:object="${administratorToppingAddForm}">
 						<fieldset>
-							<legend>商品追加</legend>
+							<legend>トッピング追加</legend>
 							<!-- deteled -->
 							<input type="hidden" name="deleted">
 							<!-- 商品名 -->
@@ -40,26 +39,12 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<label for="name">
-											商品名:
+											トッピング名:
 										</label>
 										<div th:if="${#fields.hasErrors('name')}"
 											     th:errors="*{name}"
 											     style="color:red"></div>
 										<input type="text" name="name" id="name" class="form-control" placeholder="name" th:field="*{name}">
-									</div>
-								</div>
-							</div>
-							<!-- 商品説明 -->
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-12">
-										<label for="mailAddress">
-											商品説明:
-										</label>
-										<div th:if="${#fields.hasErrors('description')}"
-											     th:errors="*{description}"
-											     style="color:red"></div>
-										<textarea name="description" class="form-control" placeholder="description" th:field="*{description}"></textarea>
 									</div>
 								</div>
 							</div>
@@ -81,20 +66,6 @@
 									</div>
 								</div>
 							</div>
-							<!-- 画像 -->
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-12">
-										<label for="passwaord">
-											画像:
-										</label>
-										<div th:if="${#fields.hasErrors('imagePath')}"
-											     th:errors="*{imagePath}"
-											     style="color:red"></div>
-  										<input type="file" name="imagePath" accept=".jpg,.png,image/jpeg,image/png" class="form-control" placeholder="img" th:field="*{imagePath}">
-									</div>
-								</div>
-							</div>
 							<!-- 登録ボタン -->
 							<div class="form-group">
 								<div class="row">
@@ -110,7 +81,7 @@
 
 <!-- ここから下を編集する必要はありません -->
 				</div>
-	              <a th:href="@{/administrator/itemList}"><input type="button" value="戻る" class="btn btn-primary"></a>
+	              <a th:href="@{/administrator/toppingList}"><input type="button" value="戻る" class="btn btn-primary"></a>
 			</div>
 		</div>
 	</div>

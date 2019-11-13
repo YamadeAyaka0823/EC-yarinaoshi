@@ -60,7 +60,7 @@ public class UserRepository {
 	 * @return
 	 */
 	public List<User> findAll(){
-		String sql = "SELECT id, name, email, password, zipcode, address, telephone FROM users ORDER BY id";
+		String sql = "SELECT id, name, email, password, zipcode, address, telephone FROM users WHERE deleted = false ORDER BY id";
 		List<User> userList = template.query(sql, USER_ROW_MAPPER);
 		return userList;
 	}
@@ -78,6 +78,16 @@ public class UserRepository {
 			return null;
 		}
 		return userList.get(0);
+	}
+	
+	/**
+	 * 管理者画面でUserを削除するリポジトリ.
+	 * @param id
+	 */
+	public void deleteById(Integer id) {
+		String sql = "UPDATE users SET deleted = true WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(sql, param);
 	}
 	
 

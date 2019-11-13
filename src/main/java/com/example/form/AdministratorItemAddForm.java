@@ -1,19 +1,27 @@
 package com.example.form;
 
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class AdministratorItemAddForm {
 	
 	/** ID */
 	private String id;
 	/** 商品名 */
+	@NotBlank(message="商品名を入れてください")
 	private String name;
 	/** 説明 */
+	@NotBlank(message="商品説明を入れてください")
 	private String description;
 	/** priceM */
+	@NotBlank(message="値段を入れてください")
 	private String priceM;
 	/** priceL */
+	@NotBlank(message="値段を入れてください")
 	private String priceL;
 	/** 画像パス */
-	private String imagePath;
+	private MultipartFile imagePath;
 	
 	private Boolean deleted;
 	
@@ -69,11 +77,11 @@ public class AdministratorItemAddForm {
 		this.priceL = priceL;
 	}
 
-	public String getImagePath() {
+	public MultipartFile getImagePath() {
 		return imagePath;
 	}
 
-	public void setImagePath(String imagePath) {
+	public void setImagePath(MultipartFile imagePath) {
 		this.imagePath = imagePath;
 	}
 
@@ -90,6 +98,8 @@ public class AdministratorItemAddForm {
 		return "AdministratorItemAddForm [id=" + id + ", name=" + name + ", description=" + description + ", priceM="
 				+ priceM + ", priceL=" + priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + "]";
 	}
+
+
 	
 	
 

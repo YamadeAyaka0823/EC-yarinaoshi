@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Item;
 import com.example.domain.Topping;
-import com.example.form.AdministratorItemAddForm;
+import com.example.form.AdministratorToppingAddForm;
 import com.example.form.ItemForm;
 import com.example.repository.ItemRepository;
 import com.example.repository.ToppingRepository;
@@ -134,15 +134,68 @@ public class ItemService {
 	 * 管理者側で商品を追加するサービス.
 	 * @param form
 	 */
-	public void itemInsert(AdministratorItemAddForm form) {
-		Item item = new Item();
-		item.setName(form.getName());
-		item.setDescription(form.getDescription());
-		item.setPriceM(form.getIntPriceM());
-		item.setPriceL(form.getIntPriceL());
-		item.setImagePath(form.getImagePath());
-		item.setDeleted(form.getDeleted());
+	public void itemInsert(Item item) {
 		itemRepository.itemInsert(item);
+	}
+	
+	/**
+	 * 管理者側で商品の曖昧検索するサービス.
+	 * @param form
+	 * @return
+	 */
+	public List<List<Item>> findByItemName(String name){
+		return arrayTable(itemRepository.findByItemName(name));
+	}
+	
+	/**
+	 * 管理者側でトッピングの一覧を表示するサービス.
+	 * @return
+	 */
+	public List<List<Topping>> AdministratorFindAllTopping(){
+		return arrayTable2(toppingRepository.findAllTopping());
+	}
+	
+	/**
+	 * 管理者側でトッピングの追加をするサービス.
+	 * @param form
+	 */
+	public void toppingInsert(AdministratorToppingAddForm form) {
+		Topping topping = new Topping();
+		topping.setName(form.getName());
+		topping.setPriceM(form.getIntPriceM());
+		topping.setPriceL(form.getIntPriceL());
+		toppingRepository.toppingInsert(topping);
+	}
+	
+	/**
+	 * 管理者側でトッピングの更新をするサービス.
+	 * @param form
+	 */
+	public void toppingUpdate(AdministratorToppingAddForm form) {
+		Topping topping = new Topping();
+		topping.setId(form.getIntId());
+		topping.setName(form.getName());
+		topping.setPriceM(form.getIntPriceM());
+		topping.setPriceL(form.getIntPriceL());
+		toppingRepository.toppingUpdate(topping);
+	}
+	
+	/**
+	 * 管理者側でトッピングを削除するサービス.
+	 * @param id
+	 */
+	public void deleteById(Integer id) {
+		toppingRepository.deleteById(id);
+	}
+	
+	/**
+	 * 管理者側でトッピングの曖昧検索するサービス.
+	 * @param form
+	 * @return
+	 */
+	public List<List<Topping>> findByToppingName(String name){
+		List<List<Topping>> toppingList = arrayTable2(toppingRepository.findByToppingName(name));
+		return toppingList;
 	}
 	
 

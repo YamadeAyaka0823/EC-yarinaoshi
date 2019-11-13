@@ -8,10 +8,21 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <title>ピザ屋のネット注文</title>
 <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link th:href="@{/css/piza.css}" rel="stylesheet">
+<link th:href="@{/css/autocomplete.css}" rel="stylesheet">
+
+
+
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+  <script th:src="@{https://code.jquery.com/jquery-1.12.4.js}"></script>
+  <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
+  <script th:src="@{/js/itemList.js}"></script>
+
+
+
 </head>
 <body>
 	<div class="container">
@@ -30,13 +41,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						alt="main log" th:src="@{/img/header_logo_small.png}" height="35">
 					</a>
 				</div>
-
+                
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-						<a th:href="@{/administrator/add}" class="navbar-link">商品追加</a>&nbsp;&nbsp;
-						<a th:href="item_list.html" class="navbar-link">ログアウト</a>
+						<a th:href="@{/administrator/toppingAdd}" class="navbar-link">トッピング追加</a>&nbsp;&nbsp;
+						<a th:href="@{/administrator/toppingChange}" class="navbar-link">トッピング変更</a>&nbsp;&nbsp;
+						<a th:href="@{/administrator/toppingDelete}" class="navbar-link">トッピング削除</a>&nbsp;&nbsp;
+						<a th:href="@{/logout}" class="navbar-link">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -53,17 +66,20 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" th:action="@{/administrator/itemSearch}" class="form-horizontal">
-								<span th:text="${error}" style="color:red"></span>
+						<form method="post" th:action="@{/administrator/findByToppingName}" class="form-horizontal">
+							<span th:text="${error}" style="color:red"></span>
+							
 							<div class="form-group">
-								<label for="code" class="control-label col-sm-2">商品名</label>
+							<div class="ui-widget">
+								<label for="serchName" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
-									<input type="text" name="name" id="code"
+									<input type="text" name="name" id="serchName"
 										class="form-control input-sm" />
 								</div>
 							</div>
+							</div>
 							<div class="text-center">
-								<button type="submit" value="検索" class="btn btn-primary">検索</button>
+								<button id="btn" type="submit" value="検索" class="btn btn-primary">検索</button>
 								<button type="reset" value="クリア" class="btn btn-default">クリア</button>
 							</div>
 						</form>
@@ -71,34 +87,34 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				</div>
 			</div>
 		</div>
-
+         
+                
 		<!-- table -->
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				Mサイズ・・・200円(税抜)   Lサイズ・・・300円(税抜)
 				<table class="table table-striped">
 					<tbody>
-						<tr th:each="item:${itemList}">
+						<tr th:each="toppings:${toppingList}" id="number">
 
-							<th th:each="list:${item}">
-								<a href="item_detail.html" th:href="@{'/administrator/itemDetail?id=' + ${list.id}}">
-									<img th:src="@{/img/} + ${list.imagePath}"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a>
-								<a th:href="@{'/administrator/itemDetail?id=' + ${list.id}}"><span th:text="${list.name}">じゃがバターベーコン</span></a><br>
-								M<span class="price" th:text="${#numbers.formatInteger(list.priceM, 2, 'COMMA')}">&nbsp;&nbsp;</span>&nbsp;&nbsp;円(税抜)<br>
-								L<span class="price" th:text="${#numbers.formatInteger(list.priceL, 2, 'COMMA')}">&nbsp;</span>&nbsp;&nbsp;円(税抜)<br>
+							<th th:each="topping:${toppings}">
+							    <span th:text="${topping.id}"></span>
+								<span th:text="${topping.name}">じゃがバターベーコン</span>
 							</th>
+						
 						</tr>
+
+
 					</tbody>
 				</table>
 
 			</div>
 		</div>
 	</div>
+
+	
 	<!-- end container -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script th:src="@{js/bootstrap.min.js}"></script>
 </body>
 </html>

@@ -6323,3 +6323,31 @@ button.close {
     display: none !important;
   }
 }
+
+
+#main_field{
+	width:60%;
+	height:250px;
+	margin:0 auto;
+	text-align:center;
+}
+ 
+#side{
+	width:40%;
+	height:250px;
+	margin:150px auto;
+	background-color:#99FF66;
+	float:left;
+}
+ 
+#main{
+	width:40%;
+	height:250px;
+	margin:150px auto;
+	background-color:orange;
+	float:right;
+}
+ 
+.clear_element{
+	clear:both;
+}

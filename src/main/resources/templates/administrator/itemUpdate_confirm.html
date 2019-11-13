@@ -8,6 +8,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <title>ピザ屋のネット注文</title>
 <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link th:href="@{/css/piza.css}" rel="stylesheet">
+<link th:href="@{/css/confirm.css}" rel="stylesheet">
 <script th:src="@{/js/alert.js}"></script>
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -45,69 +46,59 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<!-- /.container-fluid -->
 		</nav>
 
-		<form action="cart_list.html">
+		<form th:action="@{/administrator/itemUpdate}" method="post">
+		<h2 align="center">変更確認</h2>
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
+			
+			<table border="1" align="center">
+			 <tr>
+			 <th width="120px" height="50px">商品名</th>
+			 <td width="400px" height="50px" th:text="${item.name}"></td>
+			 </tr>
+			 <tr>
+			 <th width="120px" height="100px">商品説明</th>
+			 <td width="200px" height="100px" th:text="${item.description}"></td>
+			 </tr>
+			 <tr>
+			 <th width="120px" height="50px">価格(Mサイズ)</th>
+			 <td width="200px" height="50px" th:text="${#numbers.formatInteger(item.priceM, 2, 'COMMA')} + '円'"></td>
+			 </tr>
+			 <tr>
+			 <th width="120px" height="50px">価格(Lサイズ)</th>
+			 <td width="200px" height="50px" th:text="${#numbers.formatInteger(item.priceL, 2, 'COMMA')} + '円'"></td>
+			 </tr>
+			 <tr>
+			 <th width="120px" height="100px">画像</th>
+			 <td width="200px" height="100px" th:text="${item.imagePath}"></td>
+			 </tr>
 
-				<h3 class="text-center">商品詳細</h3>
+			</table>
+			
+			<input type="hidden" name="name" th:value="${item.name}">
+			<input type="hidden" name="description" th:value="${item.description}">
+			<input type="hidden" name="priceM" th:value="${item.priceM}">
+			<input type="hidden" name="priceL" th:value="${item.priceL}">
+			<input type="hidden" name="imagePath" th:value="${item.imagePath}">
+			<input type="hidden" name="deleted" th:value="${item.deleted}">
+			<input type="hidden" name="id" th:value="${item.id}">
+			<br>
+			<!-- 登録ボタン -->
+			<div class="form-group">
 				<div class="row">
-					<div class="col-xs-5">
-						<img th:src="@{/img/} + ${item.imagePath}" class="img-responsive img-rounded">
-					</div>
-
-					<div class="col-xs-5">
-						<div class="bs-component">
-							<h4 th:text="${item.name}">じゃがバターベーコン</h4> <br>
-							<br>
-							<p th:text="${item.description}">マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
-						</div>
-					</div>
-				</div><br>
-				<div class="row">
-					<div class="col-xs-offset-2 col-xs-8">
-						<div class="form-group">
-							<div class="row">
-								<div class="col-sm-12">
-									<label for="inputResponsibleCompany">サイズ</label>
-								</div>
-								<div class="col-sm-12">
-									
-										M<span th:text="${#numbers.formatInteger(item.priceM, 2, 'COMMA')}" class="price">&nbsp;&nbsp;</span>&nbsp;&nbsp;円(税抜)
-									
-										L<span th:text="${#numbers.formatInteger(item.priceL, 2, 'COMMA')}" class="price">&nbsp;</span>&nbsp;&nbsp;円(税抜)
-								</div>
-							</div>
-						</div>
+					<div class="col-sm-12">
+						<button type="submit" class="btn btn-primary" id="button">登録</button>
 					</div>
 				</div>
 			</div>
-		</div>
-		</form>
-		
-		<form th:action="@{/administrator/update}" method="post" name="form">
-		   <div class="text-center">
-			<button type="button" class="btn btn-primary" id="button" onclick="Check('1')">削除</button>
-			  <input type="hidden" name="button" >
-<!-- 		<a th:href="@{/administrator/update}"><button type="button" class="btn btn-primary" onclick="location.href='/administrator/itemUpdate.html' ">更新</button></a>
- -->					
-              <button type="button" class="btn btn-primary" onclick="Check('2')">更新</button>
-             <input type="hidden" name="id" th:value="${item.id}">
-			</div>
-			</form>
-			<br>
-			<br>
-			<a th:href="@{/administrator/itemList}"><input type="button" value="戻る" class="btn btn-primary"></a>
 
+    </div>
 	</div>
+	</form>	
+	</div>		
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script>
-//	$('input[name="button"]').val('1')
-//	document.getElementsByName("button")[0].value = 1;
-//	alert(document.getElementsByName("button")[0].value)
-
-	</script>
 </body>
 </html>

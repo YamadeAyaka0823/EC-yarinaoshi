@@ -2,15 +2,12 @@ package com.example.repository;
 
 import java.util.List;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.OrderTopping;
@@ -36,7 +33,7 @@ public class ToppingRepository {
 	 * @return
 	 */
 	public List<Topping> findAllTopping(){
-		String sql = "SELECT id, name, price_m, price_l FROM toppings";
+		String sql = "SELECT id, name, price_m, price_l FROM toppings WHERE deleted = false ORDER BY id";
 		List<Topping> toppingList = template.query(sql, TOPPING_ROW_MAPPER);
 		return toppingList;
 	}
@@ -63,6 +60,48 @@ public class ToppingRepository {
 		String sql = "DELETE FROM order_toppings WHERE order_item_id = :orderItemId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 		template.update(sql, param);
+	}
+	
+	/**
+	 * 管理者画面でトッピングを追加するリポジトリ.
+	 * @param topping
+	 */
+	public void toppingInsert(Topping topping) {
+		String sql = "INSERT INTO toppings(name, price_m, price_l) VALUES(:name, :priceM, :priceL)";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(topping);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 管理者画面でトッピングを更新するリポジトリ.
+	 * @param topping
+	 */
+	public void toppingUpdate(Topping topping) {
+		String sql = "UPDATE toppings SET name = :name, price_m = :priceM, price_l = :priceL WHERE id = :id";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(topping);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 管理者側でトッピングを削除するリポジトリ.
+	 * @param id
+	 */
+	public void deleteById(Integer id) {
+		String sql = "UPDATE toppings SET deleted = true WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 管理者側でトッピングの曖昧検索するリポジトリ.
+	 * @param name
+	 * @return
+	 */
+	public List<Topping> findByToppingName(String name){
+		String sql = "SELECT id, name, price_m, price_l FROM toppings WHERE name LIKE :name AND deleted = false";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		List<Topping> toppingList = template.query(sql, param, TOPPING_ROW_MAPPER);
+		return toppingList;
 	}
 
 }

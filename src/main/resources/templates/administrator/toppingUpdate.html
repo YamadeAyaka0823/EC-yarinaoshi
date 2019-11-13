@@ -29,37 +29,28 @@
 				
 <!-- ここから上を編集する必要はありません -->
 
-					<form method="post" th:action="@{/administrator/itemAdd}" enctype="multipart/form-data" th:object="${administratorItemAddForm}">
-					<input type="hidden" name="deleted" th:value="${false}">
+					<form method="post" th:action="@{/administrator/toppingUpdate}" enctype="multipart/form-data">
 						<fieldset>
-							<legend>商品追加</legend>
-							<!-- deteled -->
-							<input type="hidden" name="deleted">
+							<legend>トッピング追加</legend>
+							<!-- ID -->
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-12">
+										<label for="name">
+											トッピングID:
+										</label>
+										<input type="text" name="id" id="name" class="form-control" placeholder="id">
+									</div>
+								</div>
+							</div>
 							<!-- 商品名 -->
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
 										<label for="name">
-											商品名:
+											トッピング名:
 										</label>
-										<div th:if="${#fields.hasErrors('name')}"
-											     th:errors="*{name}"
-											     style="color:red"></div>
-										<input type="text" name="name" id="name" class="form-control" placeholder="name" th:field="*{name}">
-									</div>
-								</div>
-							</div>
-							<!-- 商品説明 -->
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-12">
-										<label for="mailAddress">
-											商品説明:
-										</label>
-										<div th:if="${#fields.hasErrors('description')}"
-											     th:errors="*{description}"
-											     style="color:red"></div>
-										<textarea name="description" class="form-control" placeholder="description" th:field="*{description}"></textarea>
+										<input type="text" name="name" id="name" class="form-control" placeholder="name">
 									</div>
 								</div>
 							</div>
@@ -70,28 +61,8 @@
 										<label for="passwaord">
 											価格:
 										</label><br>
-										<div th:if="${#fields.hasErrors('priceM')}"
-											     th:errors="*{priceM}"
-											     style="color:red"></div>
-										Mサイズ<input type="text" name="priceM"  class="form-control" placeholder="priceM" th:field="*{priceM}"><br>
-										<div th:if="${#fields.hasErrors('priceL')}"
-											     th:errors="*{priceL}"
-											     style="color:red"></div>
-										Lサイズ<input type="text" name="priceL"  class="form-control" placeholder="priceL" th:field="*{priceL}">
-									</div>
-								</div>
-							</div>
-							<!-- 画像 -->
-							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-12">
-										<label for="passwaord">
-											画像:
-										</label>
-										<div th:if="${#fields.hasErrors('imagePath')}"
-											     th:errors="*{imagePath}"
-											     style="color:red"></div>
-  										<input type="file" name="imagePath" accept=".jpg,.png,image/jpeg,image/png" class="form-control" placeholder="img" th:field="*{imagePath}">
+										Mサイズ<input type="text" name="priceM"  class="form-control" placeholder="priceM"><br>
+										Lサイズ<input type="text" name="priceL"  class="form-control" placeholder="priceL">
 									</div>
 								</div>
 							</div>
@@ -110,7 +81,7 @@
 
 <!-- ここから下を編集する必要はありません -->
 				</div>
-	              <a th:href="@{/administrator/itemList}"><input type="button" value="戻る" class="btn btn-primary"></a>
+	              <a th:href="@{/administrator/toppingList}"><input type="button" value="戻る" class="btn btn-primary"></a>
 			</div>
 		</div>
 	</div>

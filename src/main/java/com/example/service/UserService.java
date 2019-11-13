@@ -63,6 +63,14 @@ public class UserService {
 	public User load(Integer id) {
 		return userRepository.load(id);
 	}
+	
+	/**
+	 * 管理者側でUserを削除するサービス.
+	 * @param id
+	 */
+	public void deleteById(Integer id) {
+		 userRepository.deleteById(id);
+	}
 
 
 }

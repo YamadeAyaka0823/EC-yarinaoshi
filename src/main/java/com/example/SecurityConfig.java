@@ -36,7 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/user/toLogin","/user/register","/user/insert", "/item/list", "/item/serch", "/item/detail", "/shoppingCart/addItemToCart",
 					      "/order/", "/order/load", "/getAutoComplete/list", "/shoppingCart/showOrderItem", "/shoppingCart/delete", "/orderHistory/history", "/card/confirm",
 					      "/administrator", "/administrator/register", "/administrator/list", "/administrator/detail", "/administrator/login", "/administrator/enter", "/administrator/logout",
-					      "/administrator/itemList", "/administrator/itemDetail", "/administrator/update", "/administrator/itemUpdate", "/administrator/add", "/administrator/itemAdd").permitAll() //「/」などのパスは全てのユーザに許可
+					      "/administrator/itemList", "/administrator/itemDetail", "/administrator/update", "/administrator/itemUpdate", "/administrator/add", "/administrator/itemAdd",
+					      "/administrator/itemSearch", "/administrator/itemOrTopping", "/administrator/toppingList", "/administrator/toppingAdd", "/administrator/toppingInsert",
+					      "/administrator/toppingChange", "/administrator/toppingUpdate", "/administrator/delete", "/administrator/toppingDelete", "/administrator/toppingDeleteComplete",
+					      "/administrator/findByToppingName", "/administrator/itemUpdateConfirm").permitAll() //「/」などのパスは全てのユーザに許可
 			//.antMatchers("/admin/**").hasRole("ADMIN") // /admin/から始まるパスはADMIN権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			//.antMatchers("/user/**").hasRole("USER") // /user/から始まるパスはUSER権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			.anyRequest().authenticated(); // それ以外のパスは認証が必要

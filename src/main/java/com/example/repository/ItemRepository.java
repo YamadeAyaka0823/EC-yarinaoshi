@@ -43,7 +43,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findAll(Integer pageNumber){
 		int offset = (pageNumber - 1) * 6;
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY price_m LIMIT 6 OFFSET " + offset;
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE deleted = false ORDER BY price_m LIMIT 6 OFFSET " + offset;
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
@@ -54,7 +54,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findAllHighPrice(Integer pageNumber){
 		int offset = (pageNumber - 1) * 6;
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY price_m DESC LIMIT 6 OFFSET " + offset;
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE deleted = false ORDER BY price_m DESC LIMIT 6 OFFSET " + offset;
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
@@ -66,7 +66,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findByName(String name, Integer pageNumber){
 		int offset = (pageNumber - 1) * 6;
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name ORDER BY price_m LIMIT 6 OFFSET " + offset;
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name AND deleted = false ORDER BY price_m LIMIT 6 OFFSET " + offset;
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
@@ -132,7 +132,7 @@ public class ItemRepository {
 	 * @return
 	 */
 	public List<Item> findAllNotPagenation(){
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY id";
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE deleted = false ORDER BY id";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
@@ -152,7 +152,7 @@ public class ItemRepository {
 	 * @param id
 	 */
 	public void itemDeleteById(Integer id) {
-		String sql = "DELETE FROM items WHERE id = :id";
+		String sql = "UPDATE items SET deleted = true WHERE id = :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		template.update(sql, param);
 	}
@@ -165,6 +165,18 @@ public class ItemRepository {
 		String sql = "INSERT INTO items(name, description, price_m, price_l, image_path, deleted) VALUES(:name, :description, :priceM, :priceL, :imagePath, :deleted)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(item);
 		template.update(sql, param);
+	}
+	
+	/**
+	 * 管理者側で商品の曖昧検索するリポジトリ.
+	 * @param name
+	 * @return
+	 */
+	public List<Item> findByItemName(String name){
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name AND deleted = false";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		return itemList;
 	}
 	
 
