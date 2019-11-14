@@ -46,42 +46,30 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<!-- /.container-fluid -->
 		</nav>
 
-		<form th:action="@{/administrator/itemUpdate}" method="post">
+		<form th:action="@{/administrator/toppingInsert}" method="post">
 		<h2 align="center">変更確認</h2>
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 			
 			<table border="1" align="center">
 			 <tr>
-			 <th width="120px" height="50px">商品名</th>
-			 <td width="400px" height="50px" th:text="${item.name}"></td>
-			 </tr>
-			 <tr>
-			 <th width="120px" height="100px">商品説明</th>
-			 <td width="200px" height="100px" th:text="${item.description}"></td>
+			 <th width="120px" height="50px">トッピング名</th>
+			 <td width="400px" height="50px" th:text="${topping.name}"></td>
 			 </tr>
 			 <tr>
 			 <th width="120px" height="50px">価格(Mサイズ)</th>
-			 <td width="200px" height="50px" th:text="${#numbers.formatInteger(item.priceM, 2, 'COMMA')} + '円'"></td>
+			 <td width="200px" height="50px" th:text="${topping.priceM} + '円'"></td>
 			 </tr>
 			 <tr>
 			 <th width="120px" height="50px">価格(Lサイズ)</th>
-			 <td width="200px" height="50px" th:text="${#numbers.formatInteger(item.priceL, 2, 'COMMA')} + '円'"></td>
-			 </tr>
-			 <tr>
-			 <th width="120px" height="100px">画像</th>
-			 <td width="200px" height="100px" th:text="${item.imagePath}"></td>
+			 <td width="200px" height="50px" th:text="${topping.priceL} + '円'"></td>
 			 </tr>
 
 			</table>
 			
-			<input type="hidden" name="name" th:value="${item.name}">
-			<input type="hidden" name="description" th:value="${item.description}">
-			<input type="hidden" name="priceM" th:value="${item.priceM}">
-			<input type="hidden" name="priceL" th:value="${item.priceL}">
-			<input type="hidden" name="imagePath" th:value="${item.imagePath}">
-			<input type="hidden" name="deleted" th:value="${item.deleted}">
-			<input type="hidden" name="id" th:value="${item.id}">
+			<input type="hidden" name="name" th:value="${topping.name}">
+			<input type="hidden" name="priceM" th:value="${topping.priceM}">
+			<input type="hidden" name="priceL" th:value="${topping.priceL}">
 			<br>
 			<!-- 登録ボタン -->
 			<div class="form-group">

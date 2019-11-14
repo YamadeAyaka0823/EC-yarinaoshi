@@ -25,6 +25,7 @@ import com.example.form.AdministratorItemAddForm;
 import com.example.form.AdministratorItemUpdateForm;
 import com.example.form.AdministratorLoginForm;
 import com.example.form.AdministratorToppingAddForm;
+import com.example.form.AdministratorToppingUpdateForm;
 import com.example.service.AdministratorService;
 import com.example.service.ItemService;
 import com.example.service.UserService;
@@ -53,13 +54,18 @@ public class AdministratorController {
 	}
 	
 	@ModelAttribute
-	public AdministratorToppingAddForm setUpForm3() {
-		return new AdministratorToppingAddForm();
+	public AdministratorToppingUpdateForm setUpForm3() {
+		return new AdministratorToppingUpdateForm();
 	}
 	
 	@ModelAttribute
 	public AdministratorItemAddForm setUpForm4() {
 		return new AdministratorItemAddForm();
+	}
+	
+	@ModelAttribute
+	public AdministratorToppingAddForm setUpForm5() {
+		return new AdministratorToppingAddForm();
 	}
 	
 	@RequestMapping("")
@@ -199,7 +205,6 @@ public class AdministratorController {
 	 */
 	@RequestMapping("/update")
 	public String update(Integer button,Integer id, Model model) {
-		
 		if(button == 2) {
 			Item item = itemService.load(id);
 			model.addAttribute("item", item);
@@ -247,34 +252,16 @@ public class AdministratorController {
 	 * @return
 	 */
 	@RequestMapping("/itemAdd")
-	public String itemAdd(@Validated AdministratorItemAddForm form, BindingResult result, Model model) {
+	public String itemAdd(Item item, Model model) {
 		
-		if(result.hasErrors()) {
-			return add();
+		Path sourcePath = Paths.get("src/main/resources/static/imgConfirm/" + item.getImagePath());
+		Path targetPath = Paths.get("src/main/resources/static/img/" + item.getImagePath());
+		try {
+			Files.move(sourcePath, targetPath);
+		}catch(IOException e) {
+			e.printStackTrace();
 		}
 		
-		int dot = form.getImagePath().getOriginalFilename().lastIndexOf(".");
-		String extention = "";
-		if(dot > 0) {
-			extention = form.getImagePath().getOriginalFilename().substring(dot).toLowerCase();
-		}
-		String filename = form.getImagePath().getOriginalFilename();
-		Path path = Paths.get("src/main/resources/static/img/" + filename);
-		
-		try(OutputStream os = Files.newOutputStream(path, StandardOpenOption.CREATE)){
-			byte[] bytes = form.getImagePath().getBytes();
-			os.write(bytes);
-		}catch(IOException ex) {
-			System.err.println(ex);
-		}
-		
-		Item item = new Item();
-		item.setName(form.getName());
-		item.setDescription(form.getDescription());
-		item.setPriceM(form.getIntPriceM());
-		item.setPriceL(form.getIntPriceL());
-		item.setImagePath(filename);
-		item.setDeleted(form.getDeleted());
 		itemService.itemInsert(item);
 		return "redirect:/administrator/itemList";
 	}
@@ -326,11 +313,8 @@ public class AdministratorController {
 	 * @return
 	 */
 	@RequestMapping("/toppingInsert")
-	public String toppingInsert(@Validated AdministratorToppingAddForm form, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			return toppingAdd();
-		}
-		itemService.toppingInsert(form);
+	public String toppingInsert(Topping topping, Model model) {
+		itemService.toppingInsert(topping);
 		return "redirect:/administrator/toppingList";
 	}
 	
@@ -350,8 +334,8 @@ public class AdministratorController {
 	 * @return
 	 */
 	@RequestMapping("/toppingUpdate")
-	public String toppingUpdate(AdministratorToppingAddForm form, Model model) {
-		itemService.toppingUpdate(form);
+	public String toppingUpdate(Topping topping, Model model) {
+		itemService.toppingUpdate(topping);
 		return toppingList(model);
 	}
 	
@@ -426,6 +410,83 @@ public class AdministratorController {
 		
 		model.addAttribute("item", item);
 		return "administrator/itemUpdate_confirm";
+	}
+	
+	/**
+	 * 商品追加最終確認.
+	 * @return
+	 */
+	@RequestMapping("/itemAddConfirm")
+	public String itemAddConfirm(@Validated AdministratorItemAddForm form, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			return add();
+		}
+		
+		int dot = form.getImagePath().getOriginalFilename().lastIndexOf(".");
+		String extention = "";
+		if(dot > 0) {
+			extention = form.getImagePath().getOriginalFilename().substring(dot).toLowerCase();
+		}
+		String filename = form.getImagePath().getOriginalFilename();
+		Path path = Paths.get("src/main/resources/static/imgConfirm/" + filename);
+		
+		try(OutputStream os = Files.newOutputStream(path, StandardOpenOption.CREATE)){
+			byte[] bytes = form.getImagePath().getBytes();
+			os.write(bytes);
+		}catch(IOException ex) {
+			System.err.println(ex);
+		}
+		
+		Item item = new Item();
+		item.setName(form.getName());
+		item.setDescription(form.getDescription());
+		item.setPriceM(form.getIntPriceM());
+		item.setPriceL(form.getIntPriceL());
+		item.setImagePath(filename);
+		item.setDeleted(form.getDeleted());
+		model.addAttribute("item", item);
+		return "administrator/itemAdd_confirm";
+	}
+	
+	/**
+	 * トッピング更新最終確認.
+	 * @return
+	 */
+	@RequestMapping("/toppingUpdateConfirm")
+	public String toppingUpdateConfirm(@Validated AdministratorToppingUpdateForm form, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			return toppingChange();
+		}
+		
+		Topping topping = new Topping();
+		topping.setId(form.getIntId());
+		topping.setName(form.getName());
+		topping.setPriceM(form.getIntPriceM());
+		topping.setPriceL(form.getIntPriceL());
+		topping.setDeleted(form.getDeleted());
+		model.addAttribute("topping", topping);
+		return "administrator/toppingUpdate_confirm";
+	}
+	
+	/**
+	 * トッピング追加最終確認.
+	 * @return
+	 */
+	@RequestMapping("/toppingInsertConfirm")
+	public String toppingInsertConfirm(@Validated AdministratorToppingAddForm form, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			return toppingAdd();
+		}
+		
+		Topping topping = new Topping();
+		topping.setName(form.getName());
+		topping.setPriceM(form.getIntPriceM());
+		topping.setPriceL(form.getIntPriceL());
+		model.addAttribute("topping", topping);
+		return "administrator/toppingAdd_confirm";
 	}
 	
 

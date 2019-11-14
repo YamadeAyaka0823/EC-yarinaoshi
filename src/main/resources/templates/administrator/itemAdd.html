@@ -29,7 +29,7 @@
 				
 <!-- ここから上を編集する必要はありません -->
 
-					<form method="post" th:action="@{/administrator/itemAdd}" enctype="multipart/form-data" th:object="${administratorItemAddForm}">
+					<form method="post" th:action="@{/administrator/itemAddConfirm}" enctype="multipart/form-data" th:object="${administratorItemAddForm}">
 					<input type="hidden" name="deleted" th:value="${false}">
 						<fieldset>
 							<legend>商品追加</legend>

@@ -46,7 +46,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<!-- /.container-fluid -->
 		</nav>
 
-		<form th:action="@{/administrator/itemUpdate}" method="post">
+		<form th:action="@{/administrator/itemAdd}" method="post">
 		<h2 align="center">変更確認</h2>
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
@@ -81,7 +81,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<input type="hidden" name="priceL" th:value="${item.priceL}">
 			<input type="hidden" name="imagePath" th:value="${item.imagePath}">
 			<input type="hidden" name="deleted" th:value="${item.deleted}">
-			<input type="hidden" name="id" th:value="${item.id}">
 			<br>
 			<!-- 登録ボタン -->
 			<div class="form-group">

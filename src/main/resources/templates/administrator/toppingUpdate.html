@@ -29,9 +29,10 @@
 				
 <!-- ここから上を編集する必要はありません -->
 
-					<form method="post" th:action="@{/administrator/toppingUpdate}" enctype="multipart/form-data">
+					<form method="post" th:action="@{/administrator/toppingUpdateConfirm}" enctype="multipart/form-data" th:object="${administratorToppingUpdateForm}">
+					<input type="hidden" name="deleted">
 						<fieldset>
-							<legend>トッピング追加</legend>
+							<legend>トッピング変更</legend>
 							<!-- ID -->
 							<div class="form-group">
 								<div class="row">
@@ -39,7 +40,10 @@
 										<label for="name">
 											トッピングID:
 										</label>
-										<input type="text" name="id" id="name" class="form-control" placeholder="id">
+										<div th:if="${#fields.hasErrors('id')}"
+											     th:errors="*{id}"
+											     style="color:red"></div>
+										<input type="text" name="id" id="name" class="form-control" placeholder="id" th:field="*{id}">
 									</div>
 								</div>
 							</div>
@@ -50,7 +54,10 @@
 										<label for="name">
 											トッピング名:
 										</label>
-										<input type="text" name="name" id="name" class="form-control" placeholder="name">
+										<div th:if="${#fields.hasErrors('name')}"
+											     th:errors="*{name}"
+											     style="color:red"></div>
+										<input type="text" name="name" id="name" class="form-control" placeholder="name" th:field="*{name}">
 									</div>
 								</div>
 							</div>
@@ -61,8 +68,14 @@
 										<label for="passwaord">
 											価格:
 										</label><br>
-										Mサイズ<input type="text" name="priceM"  class="form-control" placeholder="priceM"><br>
-										Lサイズ<input type="text" name="priceL"  class="form-control" placeholder="priceL">
+										<div th:if="${#fields.hasErrors('priceM')}"
+											     th:errors="*{priceM}"
+											     style="color:red"></div>
+										Mサイズ<input type="text" name="priceM"  class="form-control" placeholder="priceM" th:field="*{priceM}"><br>
+										<div th:if="${#fields.hasErrors('priceL')}"
+											     th:errors="*{priceL}"
+											     style="color:red"></div>
+										Lサイズ<input type="text" name="priceL"  class="form-control" placeholder="priceL" th:field="*{priceL}">
 									</div>
 								</div>
 							</div>

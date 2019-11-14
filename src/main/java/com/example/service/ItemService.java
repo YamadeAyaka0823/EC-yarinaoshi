@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Item;
 import com.example.domain.Topping;
-import com.example.form.AdministratorToppingAddForm;
 import com.example.form.ItemForm;
 import com.example.repository.ItemRepository;
 import com.example.repository.ToppingRepository;
@@ -159,11 +158,7 @@ public class ItemService {
 	 * 管理者側でトッピングの追加をするサービス.
 	 * @param form
 	 */
-	public void toppingInsert(AdministratorToppingAddForm form) {
-		Topping topping = new Topping();
-		topping.setName(form.getName());
-		topping.setPriceM(form.getIntPriceM());
-		topping.setPriceL(form.getIntPriceL());
+	public void toppingInsert(Topping topping) {
 		toppingRepository.toppingInsert(topping);
 	}
 	
@@ -171,12 +166,7 @@ public class ItemService {
 	 * 管理者側でトッピングの更新をするサービス.
 	 * @param form
 	 */
-	public void toppingUpdate(AdministratorToppingAddForm form) {
-		Topping topping = new Topping();
-		topping.setId(form.getIntId());
-		topping.setName(form.getName());
-		topping.setPriceM(form.getIntPriceM());
-		topping.setPriceL(form.getIntPriceL());
+	public void toppingUpdate(Topping topping) {
 		toppingRepository.toppingUpdate(topping);
 	}
 	

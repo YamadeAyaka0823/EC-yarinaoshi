@@ -6,6 +6,6 @@ th{
 }
 
 #button{
-	position: static;
+	position: absolute;
 	right: 100px;
 }
