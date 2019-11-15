@@ -18,9 +18,22 @@ public class GetAutoCompleteRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
+	/**
+	 * 商品の名前.
+	 * @return
+	 */
 	public List<String> getAllNames(){
-		List<String> allNames = jdbcTemplate.query("SELECT name FROM items", NAME_ROW_MAPPER);
+		List<String> allNames = jdbcTemplate.query("SELECT name FROM items WHERE deleted = false", NAME_ROW_MAPPER);
 		return allNames;
+	}
+	
+	/**
+	 * トッピングの名前.
+	 * @return
+	 */
+	public List<String> getAllToppingNames(){
+		List<String> allToppingNames = jdbcTemplate.query("SELECT name FROM toppings WHERE deleted = false", NAME_ROW_MAPPER);
+		return allToppingNames;
 	}
 
 }

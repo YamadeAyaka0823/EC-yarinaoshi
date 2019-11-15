@@ -20,11 +20,26 @@ public class GetAutoCompleteController {
 	@Autowired
 	private GetAutoCompleteRepository getAutoCompleteRepository;
 	
+	/**
+	 * 商品のオートコンプリート.
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("/list")
 	public String getAutoComplete() {
 		List<String> nameList = getAutoCompleteRepository.getAllNames();
 		return JSON.encode(nameList);
+	}
+	
+	/**
+	 * トッピングのオートコンプリート.
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/toppingList")
+	public String getToppingAutoComplete() {
+		List<String> toppingNameList = getAutoCompleteRepository.getAllToppingNames();
+		return JSON.encode(toppingNameList);
 	}
 
 }

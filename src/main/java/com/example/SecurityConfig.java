@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					      "/administrator/itemSearch", "/administrator/itemOrTopping", "/administrator/toppingList", "/administrator/toppingAdd", "/administrator/toppingInsert",
 					      "/administrator/toppingChange", "/administrator/toppingUpdate", "/administrator/delete", "/administrator/toppingDelete", "/administrator/toppingDeleteComplete",
 					      "/administrator/findByToppingName", "/administrator/itemUpdateConfirm", "/administrator/toppingUpdateConfirm", "/administrator/toppingInsertConfirm",
-					      "/administrator/itemAddConfirm").permitAll() //「/」などのパスは全てのユーザに許可
+					      "/administrator/itemAddConfirm", "/administrator/header", "/administrator/orderHistory").permitAll() //「/」などのパスは全てのユーザに許可
 			//.antMatchers("/admin/**").hasRole("ADMIN") // /admin/から始まるパスはADMIN権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			//.antMatchers("/user/**").hasRole("USER") // /user/から始まるパスはUSER権限でログインしている場合のみアクセス可(権限設定時の「ROLE_」を除いた文字列を指定)
 			.anyRequest().authenticated(); // それ以外のパスは認証が必要

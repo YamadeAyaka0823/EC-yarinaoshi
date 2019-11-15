@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Administrator;
 import com.example.domain.Item;
+import com.example.domain.Order;
 import com.example.domain.Topping;
 import com.example.domain.User;
 import com.example.form.AdministratorForm;
@@ -28,6 +29,7 @@ import com.example.form.AdministratorToppingAddForm;
 import com.example.form.AdministratorToppingUpdateForm;
 import com.example.service.AdministratorService;
 import com.example.service.ItemService;
+import com.example.service.OrderService;
 import com.example.service.UserService;
 
 @Controller
@@ -42,6 +44,9 @@ public class AdministratorController {
 	
 	@Autowired
 	private ItemService itemService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@ModelAttribute
 	public AdministratorForm setUpForm() {
@@ -487,6 +492,19 @@ public class AdministratorController {
 		topping.setPriceL(form.getIntPriceL());
 		model.addAttribute("topping", topping);
 		return "administrator/toppingAdd_confirm";
+	}
+	
+	/**
+	 * Userの注文履歴.
+	 * @param userId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/orderHistory")
+	public String orderHistory(Integer userId, Model model) {
+		List<Order> orderHistoryList = orderService.findByStatusThan0UserId(userId);
+		model.addAttribute("orderHistoryList", orderHistoryList);
+		return "administrator/order_history";
 	}
 	
 

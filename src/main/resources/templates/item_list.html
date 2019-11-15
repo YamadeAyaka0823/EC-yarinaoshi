@@ -8,8 +8,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <title>ピザ屋のネット注文</title>
 <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link th:href="@{/css/piza.css}" rel="stylesheet">
-<link th:href="@{/css/autocomplete.css}" rel="stylesheet">
-
+<link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">
 
 
 <!--[if lt IE 9]>
@@ -35,7 +34,7 @@ $(function(){
             source : searchResult, /** 候補リスト(必須)*/
             autoFocus: true, /**リスト表示に際してリスト先頭にフォーカスするか*/
             delay: 500, /**キー入力からリスト表示までの遅延時間（ミリ秒）*/
-            minLength: 0 /**オートコンプリート機能が働く最小文字数*/
+            minLength: 1 /**オートコンプリート機能が働く最小文字数*/
         });
         },function(){
     });

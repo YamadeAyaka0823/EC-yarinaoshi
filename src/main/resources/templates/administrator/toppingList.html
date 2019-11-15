@@ -8,7 +8,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <title>ピザ屋のネット注文</title>
 <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link th:href="@{/css/piza.css}" rel="stylesheet">
-<link th:href="@{/css/autocomplete.css}" rel="stylesheet">
+<link th:href="@{/css/clock.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">
+<script th:src="@{/js/clock.js}"></script>
 
 
 
@@ -19,12 +21,31 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     
   <script th:src="@{https://code.jquery.com/jquery-1.12.4.js}"></script>
   <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
-  <script th:src="@{/js/itemList.js}"></script>
-
+<script>
+	$(function(){
+	    /** プロジェクト名が変更になっても修正が必要なくなるよう実装**/
+	    var pathname = location.pathname.split("/")[1];
+	
+	    $.ajax({
+	        /** オートコンプリート用のリストを取得するURL*/
+	        url: "/getAutoComplete/toppingList",
+	        dataType: "json",
+	        type: 'POST'
+	    }).then(function(searchResult){ /** 検索結果のリストは引数に自動で入る*/
+	        $('#searchName').autocomplete({ /** 実装したい入力欄のid/classを指定*/
+	            source : searchResult, /** 候補リスト(必須)*/
+	            autoFocus: true, /**リスト表示に際してリスト先頭にフォーカスするか*/
+	            delay: 500, /**キー入力からリスト表示までの遅延時間（ミリ秒）*/
+	            minLength: 1 /**オートコンプリート機能が働く最小文字数*/
+	        });
+	        },function(){
+	    });
+	});
+</script>
 
 
 </head>
-<body>
+<body onLoad="clock()">
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
@@ -46,10 +67,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
+					<span th:text="${session.administratorName + 'さん'}">山田さん</span>こんにちは！
+						&nbsp;&nbsp;&nbsp;
 						<a th:href="@{/administrator/toppingAdd}" class="navbar-link">トッピング追加</a>&nbsp;&nbsp;
 						<a th:href="@{/administrator/toppingChange}" class="navbar-link">トッピング変更</a>&nbsp;&nbsp;
 						<a th:href="@{/administrator/toppingDelete}" class="navbar-link">トッピング削除</a>&nbsp;&nbsp;
-						<a th:href="@{/logout}" class="navbar-link">ログアウト</a>
+						<a th:href="@{/logout}" class="navbar-link">ログアウト</a>&nbsp;&nbsp;
+						<span id="date">----/--/-- ---</span>
+						<span id="time">--:--:--</span>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -73,7 +98,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 							<div class="ui-widget">
 								<label for="serchName" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
-									<input type="text" name="name" id="serchName"
+									<input type="text" name="name" id="searchName"
 										class="form-control input-sm" />
 								</div>
 							</div>
