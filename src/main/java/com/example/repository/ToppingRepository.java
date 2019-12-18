@@ -33,7 +33,7 @@ public class ToppingRepository {
 	 * @return
 	 */
 	public List<Topping> findAllTopping(){
-		String sql = "SELECT id, name, price_m, price_l FROM toppings WHERE deleted = false ORDER BY id";
+		String sql = "SELECT id, name, price_m, price_l FROM toppings ORDER BY id";
 		List<Topping> toppingList = template.query(sql, TOPPING_ROW_MAPPER);
 		return toppingList;
 	}

@@ -33,6 +33,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					<a class="navbar-brand" th:href="@{/administrator/list}"> <!-- 企業ロゴ -->
 						<img alt="main log" th:src="@{/img/header_logo_small.png}" height="35">
 					</a>
+					<span th:text="${session.weatherHacksClass.location.prefecture}"></span>&nbsp;&nbsp;
+                        <img th:src="${session.weatherHacksClass.forecasts[0].image.url}">&nbsp;&nbsp;
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,18 +58,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 			
-			<table border="1" align="center">
+			<table border="1" align="center" class="table table-bordered">
 			 <tr>
-			 <th width="120px" height="50px">トッピング名</th>
-			 <td width="400px" height="50px" th:text="${topping.name}"></td>
+			 <th width="120px" height="50px" class="success">トッピング名</th>
+			 <td width="400px" height="50px" class="success" th:text="${topping.name}"></td>
 			 </tr>
 			 <tr>
-			 <th width="120px" height="50px">価格(Mサイズ)</th>
-			 <td width="200px" height="50px" th:text="${topping.priceM} + '円'"></td>
+			 <th width="120px" height="50px" class="warning">価格(Mサイズ)</th>
+			 <td width="200px" height="50px" class="warning" th:text="${topping.priceM} + '円'"></td>
 			 </tr>
 			 <tr>
-			 <th width="120px" height="50px">価格(Lサイズ)</th>
-			 <td width="200px" height="50px" th:text="${topping.priceL} + '円'"></td>
+			 <th width="120px" height="50px" class="success">価格(Lサイズ)</th>
+			 <td width="200px" height="50px" class="success" th:text="${topping.priceL} + '円'"></td>
 			 </tr>
 
 			</table>
@@ -88,9 +90,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<div class="form-group">
 				<div class="row">
 					<div class="col-sm-12">
-						<a th:href="@{/administrator/update}">
-						<input type="hidden" name="button" value="2">
-						<input type="button" value="戻る" class="btn btn-primary"></a>
+						<!--  <a th:href="@{/administrator/update}">
+						<input type="hidden" name="button" value="2">-->
+						<button type="button" class="btn btn-primary" onclick="history.back()">戻る</button>
 					</div>
 				</div>
 			</div>

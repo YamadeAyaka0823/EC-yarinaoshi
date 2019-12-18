@@ -61,14 +61,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					<a class="navbar-brand" th:href="@{/administrator/list}"> <!-- 企業ロゴ --> <img
 						alt="main log" th:src="@{/img/header_logo_small.png}" height="35">
 					</a>
+					<span th:text="${session.weatherHacksClass.location.prefecture}"></span>&nbsp;&nbsp;
+                        <img th:src="${session.weatherHacksClass.forecasts[0].image.url}">&nbsp;&nbsp;
 				</div>
                 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-					<span th:text="${session.administratorName + 'さん'}">山田さん</span>こんにちは！
-						&nbsp;&nbsp;&nbsp;
 						<a th:href="@{/administrator/toppingAdd}" class="navbar-link">トッピング追加</a>&nbsp;&nbsp;
 						<a th:href="@{/administrator/toppingChange}" class="navbar-link">トッピング変更</a>&nbsp;&nbsp;
 						<a th:href="@{/administrator/toppingDelete}" class="navbar-link">トッピング削除</a>&nbsp;&nbsp;

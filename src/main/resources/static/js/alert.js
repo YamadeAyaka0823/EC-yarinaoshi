@@ -1,4 +1,4 @@
-/** 商品削除と更新の際に使う確認ダイアログ */
+/** 商品削除と更新を選ぶ際に使う確認ダイアログ */
 function Check(action){
 	if(action == 1){
 		document.getElementsByName("button")[0].value = "1";

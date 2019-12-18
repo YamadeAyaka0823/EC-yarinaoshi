@@ -6,12 +6,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ピザ屋のネット注文</title>
+
 <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link th:href="@{/css/piza.css}" rel="stylesheet">
 <link th:href="@{/css/confirm.css}" rel="stylesheet">
 <link th:href="@{/css/clock.css}" rel="stylesheet">
-<script th:src="@{/js/alert.js}"></script>
+<script th:src="@{/js/buttonCheck.js}"></script>
 <script th:src="@{/js/clock.js}"></script>
+
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -33,6 +35,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 					<a class="navbar-brand" th:href="@{/administrator/list}"> <!-- 企業ロゴ -->
 						<img alt="main log" th:src="@{/img/header_logo_small.png}" height="35">
 					</a>
+					<span th:text="${session.weatherHacksClass.location.prefecture}"></span>&nbsp;&nbsp;
+                        <img th:src="${session.weatherHacksClass.forecasts[0].image.url}">&nbsp;&nbsp;
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -51,31 +55,31 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<!-- /.container-fluid -->
 		</nav>
 
-		<form th:action="@{/administrator/itemUpdate}" method="post">
+		<form th:action="@{/administrator/itemUpdate}" method="post" name="form">
 		<h2 align="center">変更確認</h2>
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 			
-			<table border="1" align="center">
+			<table border="1" align="center" class="table table-bordered">
 			 <tr>
-			 <th width="120px" height="50px">商品名</th>
-			 <td width="400px" height="50px" th:text="${item.name}"></td>
+			 <th width="120px" height="50px" class="success">商品名</th>
+			 <td width="400px" height="50px" class="success" th:text="${item.name}"></td>
 			 </tr>
 			 <tr>
-			 <th width="120px" height="100px">商品説明</th>
-			 <td width="200px" height="100px" th:text="${item.description}"></td>
+			 <th width="120px" height="100px" class="warning">商品説明</th>
+			 <td width="200px" height="100px" class="warning" th:text="${item.description}"></td>
 			 </tr>
 			 <tr>
-			 <th width="120px" height="50px">価格(Mサイズ)</th>
-			 <td width="200px" height="50px" th:text="${#numbers.formatInteger(item.priceM, 2, 'COMMA')} + '円'"></td>
+			 <th width="120px" height="50px" class="success">価格(Mサイズ)</th>
+			 <td width="200px" height="50px" class="success" th:text="${#numbers.formatInteger(item.priceM, 2, 'COMMA')} + '円'"></td>
 			 </tr>
 			 <tr>
-			 <th width="120px" height="50px">価格(Lサイズ)</th>
-			 <td width="200px" height="50px" th:text="${#numbers.formatInteger(item.priceL, 2, 'COMMA')} + '円'"></td>
+			 <th width="120px" height="50px" class="warning">価格(Lサイズ)</th>
+			 <td width="200px" height="50px" class="warning" th:text="${#numbers.formatInteger(item.priceL, 2, 'COMMA')} + '円'"></td>
 			 </tr>
 			 <tr>
-			 <th width="120px" height="100px">画像</th>
-			 <td width="200px" height="100px" th:text="${item.imagePath}"></td>
+			 <th width="120px" height="100px" class="success">画像</th>
+			 <td width="200px" height="100px" class="success" th:text="${item.imagePath}"></td>
 			 </tr>
 
 			</table>
@@ -92,7 +96,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<div class="form-group">
 				<div class="row">
 					<div class="col-sm-12">
-						<button type="submit" class="btn btn-primary" id="button">登録</button>
+						<button type="button" class="btn btn-primary" id="button" onclick="buttonCheck(1)">登録</button>
 					</div>
 				</div>
 			</div>
@@ -100,9 +104,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			<div class="form-group">
 				<div class="row">
 					<div class="col-sm-12">
-						<a th:href="@{/administrator/update}">
-						<input type="hidden" name="button" value="2">
-						<input type="button" value="戻る" class="btn btn-primary"></a>
+						<button type="button" class="btn btn-primary" onclick="buttonCheck(2)">戻る</button>
+						<input type="hidden" name="button" >
 					</div>
 				</div>
 			</div>
@@ -112,8 +115,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 			
 	</div>		
 	<!-- end container -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

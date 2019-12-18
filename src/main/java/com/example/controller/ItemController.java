@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,15 @@ public class ItemController {
 	 */
 	@RequestMapping("/serch")
 	public String serch(String name, Model model, ItemForm form) {
+		
+		/** 最大ページ数を取ってくるための処理 */
+		Integer size = itemService.findByName2(name);
+		double page = (double)size / 6;
+		BigDecimal bd = new BigDecimal(page);
+		BigDecimal bd1 = bd.setScale(0, BigDecimal.ROUND_UP);
+		int num = bd1.intValue();
 
-		if(form.getPageNumber() == null || form.getPageNumber() >= 5 || form.getPageNumber() <= 0) {
+		if(form.getPageNumber() == null || form.getPageNumber() >= num + 1 || form.getPageNumber() <= 0) {
 			form.setPageNumber(1);
 		}
 		List<List<Item>> itemList = itemService.findByName(name, form);

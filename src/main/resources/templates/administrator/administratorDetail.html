@@ -31,6 +31,8 @@
 						<!-- 企業ロゴ -->
 						<img src="../../static/img/header_logo_small.png" th:src="@{/img/header_logo_small.png}">
 					</a>
+					<span th:text="${session.weatherHacksClass.location.prefecture}"></span>&nbsp;&nbsp;
+                        <img th:src="${session.weatherHacksClass.forecasts[0].image.url}">&nbsp;&nbsp;
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->

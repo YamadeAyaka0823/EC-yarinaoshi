@@ -30,6 +30,9 @@
 					<a class="navbar-brand"  th:href="@{/administrator/list}"> <!-- 企業ロゴ --> <img
 						alt="main log" th:src="@{/img/header_logo_small.png}" height="35">
 					</a>
+					<span th:text="${session.weatherHacksClass.location.prefecture}"></span>&nbsp;&nbsp;
+                        <!-- 最高気温<span th:text="${session.weatherHacksClass.forecasts[0].temperature.max.celsius}"></span>℃-->
+                        <img th:src="${session.weatherHacksClass.forecasts[0].image.url}">&nbsp;&nbsp;
 				</div>
                 
 				<!-- Collect the nav links, forms, and other content for toggling -->

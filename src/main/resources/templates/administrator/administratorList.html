@@ -31,6 +31,8 @@
 						<!-- 企業ロゴ -->
 						<img src="../../static/img/header_logo_small.png" th:src="@{/img/header_logo_small.png}">
 					</a>
+					<span th:text="${session.weatherHacksClass.location.prefecture}"></span>&nbsp;&nbsp;
+                        <img th:src="${session.weatherHacksClass.forecasts[0].image.url}">&nbsp;&nbsp;
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -66,7 +68,6 @@
 
 <!-- ここから上を編集する必要はありません -->
 
-                <form th:action="@{/administrator/delete}" method="post">
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -75,8 +76,8 @@
 							<th>電話番号</th>
 						</tr>
 					</thead>
-					<tbody th:each="user:${userList}">
-						<tr>
+					<tbody>
+						<tr th:each="user:${userList}">
 							<td>
 								<a th:href="@{'/administrator/detail?id=' + ${user.id}}">
 									<span th:text="${user.name}">山田太郎</span>
@@ -90,14 +91,15 @@
 							</td>
 							<td>
 								<div class="text-center">
-									<button type="submit" class="btn btn-primary">削除</button>
+                <form th:action="@{/administrator/delete}" method="post">
 									<input type="hidden" name="id" th:value="${user.id}">
+									<button type="submit" class="btn btn-primary">削除</button>
+				</form>
 								</div>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-				</form>
 
 
 <!-- ここから下を編集する必要はありません -->

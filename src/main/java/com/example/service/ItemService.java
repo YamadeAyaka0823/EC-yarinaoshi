@@ -60,12 +60,16 @@ public class ItemService {
 	}
 	
 	/**
-	 * 名前で商品検索するリポジトリ.
+	 * 名前で商品検索するサービス(ページング機能あり).
 	 * @param form
 	 * @return
 	 */
 	public List<List<Item>> findByName(String name, ItemForm form){
 		return arrayTable(itemRepository.findByName(name, form.getPageNumber()));
+	}
+	
+	public Integer findByName2(String name) {
+		return itemRepository.findByName2(name);
 	}
 	
 	/**

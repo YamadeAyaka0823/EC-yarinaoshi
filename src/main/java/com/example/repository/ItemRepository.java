@@ -43,7 +43,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findAll(Integer pageNumber){
 		int offset = (pageNumber - 1) * 6;
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE deleted = false ORDER BY price_m LIMIT 6 OFFSET " + offset;
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY price_m LIMIT 6 OFFSET " + offset;
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
@@ -54,22 +54,35 @@ public class ItemRepository {
 	 */
 	public List<Item> findAllHighPrice(Integer pageNumber){
 		int offset = (pageNumber - 1) * 6;
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE deleted = false ORDER BY price_m DESC LIMIT 6 OFFSET " + offset;
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY price_m DESC LIMIT 6 OFFSET " + offset;
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
 	
 	/**
-	 * 名前で商品検索するリポジトリ.
+	 * 名前で商品検索するリポジトリ(ページング機能あり).
 	 * @param name
 	 * @return
 	 */
 	public List<Item> findByName(String name, Integer pageNumber){
 		int offset = (pageNumber - 1) * 6;
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name AND deleted = false ORDER BY price_m LIMIT 6 OFFSET " + offset;
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name ORDER BY price_m LIMIT 6 OFFSET " + offset;
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
+	}
+	
+	/**
+	 * 名前で商品検索するリポジトリ(ページング機能なし).
+	 * @param name
+	 * @return
+	 */
+	public Integer findByName2(String name){
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE name LIKE :name ORDER BY price_m ";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		Integer size = itemList.size();
+		return size;
 	}
 	
 	/**

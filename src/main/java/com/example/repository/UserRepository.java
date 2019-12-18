@@ -60,7 +60,7 @@ public class UserRepository {
 	 * @return
 	 */
 	public List<User> findAll(){
-		String sql = "SELECT id, name, email, password, zipcode, address, telephone FROM users WHERE deleted = false ORDER BY id";
+		String sql = "SELECT id, name, email, password, zipcode, address, telephone, deleted FROM users WHERE deleted = false ORDER BY id";
 		List<User> userList = template.query(sql, USER_ROW_MAPPER);
 		return userList;
 	}
