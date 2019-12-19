@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: postgres://rgjorfklnaqdtp:75652a661d60673927d0cc8df1314d6129a1ba9656ddf61fb430d45fff49dbdb@ec2-174-129-255-11.compute-1.amazonaws.com:5432/d3kp9b2n4hbjca
-    username: rgjorfklnaqdtp
-    password: 75652a661d60673927d0cc8df1314d6129a1ba9656ddf61fb430d45fff49dbdb
+    url: jdbc:postgresql://localhost:5432/ec-201907a
+    username: postgres
+    password: postgres
     
   jmx:
    enabled: false
