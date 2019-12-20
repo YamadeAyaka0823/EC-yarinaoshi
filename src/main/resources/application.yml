@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ec-201907a
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL_SPRINGBOOT:jdbc:postgresql://localhost:5432/ec-201907a}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
     
   jmx:
    enabled: false
